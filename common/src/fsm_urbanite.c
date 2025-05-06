@@ -27,6 +27,7 @@ struct fsm_urbanite_t
 	bool is_paused;
 	fsm_ultrasound_t *p_fsm_ultrasound_rear;
 	fsm_display_t *p_fsm_display_rear;
+	fsm_buzzer_t *p_fsm_buzzer_rear;
 };
 
 /* Private functions -----------------------------------------------------------*/
@@ -80,6 +81,7 @@ static void 	do_start_up_measure (fsm_t *p_this){
 	fsm_button_reset_duration(p_fsm->p_fsm_button);
 	fsm_ultrasound_start(p_fsm->p_fsm_ultrasound_rear);
 	fsm_display_set_status(p_fsm->p_fsm_display_rear,true);
+	fsm_buzzer_set_status(p_fsm->p_fsm_buzzer_rear,true);
 	printf("[URBANITE][%ld] Urbanite system ON\n", port_system_get_millis());
 }//Turn the Urbanite system ON.
  
@@ -89,12 +91,16 @@ static void 	do_display_distance (fsm_t *p_this){
 	if(p_fsm->is_paused){
 		if(distance_cm < WARNING_MIN_CM/2){
 			fsm_display_set_distance(p_fsm->p_fsm_display_rear,distance_cm);
+			fsm_buzzer_set_distance(p_fsm->p_fsm_buzzer_rear,distance_cm);
 			fsm_display_set_status(p_fsm->p_fsm_display_rear,true);
+			fsm_buzzer_set_status(p_fsm->p_fsm_buzzer_rear,true);
 		}else{
 			fsm_display_set_status(p_fsm->p_fsm_display_rear,false);
+			fsm_buzzer_set_status(p_fsm->p_fsm_buzzer_rear,false);
 		}
 	}else{
 		fsm_display_set_distance(p_fsm->p_fsm_display_rear,distance_cm);
+		fsm_buzzer_set_distance(p_fsm->p_fsm_buzzer_rear,distance_cm);
 	}
 	printf("[URBANITE][%ld] Distance: %ld cm\n", port_system_get_millis(), distance_cm);
 }//Display the distance measured by the ultrasound sensor.
@@ -104,6 +110,7 @@ static void 	do_pause_display (fsm_t *p_this){
 	fsm_button_reset_duration(p_fsm->p_fsm_button);
 	p_fsm->is_paused = !(p_fsm->is_paused);
 	fsm_display_set_status(p_fsm->p_fsm_display_rear,!(p_fsm->is_paused));
+	fsm_buzzer_set_status(p_fsm->p_fsm_buzzer_rear,!(p_fsm->is_paused));
 	if (p_fsm->is_paused)
 		printf("[URBANITE][%ld] Urbanite system display PAUSE\n", port_system_get_millis());
 	else
@@ -115,6 +122,7 @@ static void 	do_stop_urbanite (fsm_t *p_this){
 	fsm_button_reset_duration(p_fsm->p_fsm_button);
 	fsm_ultrasound_stop(p_fsm->p_fsm_ultrasound_rear);
 	fsm_display_set_status(p_fsm->p_fsm_display_rear,false);
+	fsm_buzzer_set_status(p_fsm->p_fsm_buzzer_rear,false);
 	p_fsm->is_paused = false;
 	printf("[URBANITE][%ld] Urbanite system OFF\n", port_system_get_millis());
 }//Turn the Urbanite system OFF.
@@ -149,19 +157,20 @@ fsm_trans_t 	fsm_trans_urbanite [] = {
 	{-1,NULL,-1,NULL}
 };
  
-static void 	fsm_urbanite_init (fsm_urbanite_t *p_fsm_urbanite, fsm_button_t *p_fsm_button, uint32_t on_off_press_time_ms, uint32_t pause_display_time_ms, fsm_ultrasound_t *p_fsm_ultrasound_rear, fsm_display_t *p_fsm_display_rear){
+static void 	fsm_urbanite_init (fsm_urbanite_t *p_fsm_urbanite, fsm_button_t *p_fsm_button, uint32_t on_off_press_time_ms, uint32_t pause_display_time_ms, fsm_ultrasound_t *p_fsm_ultrasound_rear, fsm_display_t *p_fsm_display_rear, fsm_buzzer_t *p_fsm_buzzer_rear){
 	fsm_init(&p_fsm_urbanite->f, fsm_trans_urbanite);
 	p_fsm_urbanite->p_fsm_button = p_fsm_button;
 	p_fsm_urbanite->on_off_press_time_ms = on_off_press_time_ms;
 	p_fsm_urbanite->pause_display_time_ms = pause_display_time_ms;
 	p_fsm_urbanite->p_fsm_ultrasound_rear = p_fsm_ultrasound_rear;
 	p_fsm_urbanite->p_fsm_display_rear = p_fsm_display_rear;
+	p_fsm_urbanite->p_fsm_buzzer_rear = p_fsm_buzzer_rear;
 	p_fsm_urbanite->is_paused = false;
 }//Create a new Urbanite FSM.
  
-fsm_urbanite_t * 	fsm_urbanite_new (fsm_button_t *p_fsm_button, uint32_t on_off_press_time_ms, uint32_t pause_display_time_ms, fsm_ultrasound_t *p_fsm_ultrasound_rear, fsm_display_t *p_fsm_display_rear){
+fsm_urbanite_t * 	fsm_urbanite_new (fsm_button_t *p_fsm_button, uint32_t on_off_press_time_ms, uint32_t pause_display_time_ms, fsm_ultrasound_t *p_fsm_ultrasound_rear, fsm_display_t *p_fsm_display_rear,fsm_buzzer_t *p_fsm_buzzer_rear){
 	fsm_urbanite_t *p_fsm_urbanite = malloc(sizeof(fsm_urbanite_t)); /* Do malloc to reserve memory of all other FSM elements, although it is interpreted as fsm_t (the first element of the structure) */
-    fsm_urbanite_init(p_fsm_urbanite,p_fsm_button,on_off_press_time_ms,pause_display_time_ms,p_fsm_ultrasound_rear,p_fsm_display_rear);                  /* Initialize the FSM */
+    fsm_urbanite_init(p_fsm_urbanite,p_fsm_button,on_off_press_time_ms,pause_display_time_ms,p_fsm_ultrasound_rear,p_fsm_display_rear,p_fsm_buzzer_rear);                  /* Initialize the FSM */
     return p_fsm_urbanite;
 }//Create a new Urbanite FSM.
  

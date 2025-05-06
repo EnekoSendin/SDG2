@@ -15,6 +15,7 @@
 #include <stdint.h>
 #include "fsm_button.h"
 #include "fsm_display.h"
+#include "fsm_buzzer.h"
 #include "fsm_ultrasound.h"
 
 /* Defines and enums ----------------------------------------------------------*/
@@ -44,7 +45,7 @@
 
 /* Function prototypes and explanation -------------------------------------------------*/
 
-fsm_urbanite_t * 	fsm_urbanite_new (fsm_button_t *p_fsm_button, uint32_t on_off_press_time_ms, uint32_t pause_display_time_ms, fsm_ultrasound_t *p_fsm_ultrasound_rear, fsm_display_t *p_fsm_display_rear);
+fsm_urbanite_t * 	fsm_urbanite_new (fsm_button_t *p_fsm_button, uint32_t on_off_press_time_ms, uint32_t pause_display_time_ms, fsm_ultrasound_t *p_fsm_ultrasound_rear, fsm_display_t *p_fsm_display_rear, fsm_buzzer_t *p_fsm_buzzer_rear);
  	//Create a new Urbanite FSM.
  
 void 	fsm_urbanite_fire (fsm_urbanite_t *p_fsm);
