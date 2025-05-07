@@ -45,11 +45,12 @@ stm32f4_buzzer_hw_t *_stm32f4_buzzer_get(uint32_t buzzer_id){
 
 void _timer_pwm_config2 (uint32_t buzzer_id){
 	if (buzzer_id == PORT_REAR_PARKING_BUZZER_ID){
-		RCC -> APB2ENR |= RCC_APB2ENR_TIM8EN;
-		TIM8 -> CR1 &= ~TIM_CR1_CEN;
-		TIM8 -> CR1 |= TIM_CR1_ARPE;
+		RCC -> APB2ENR |= RCC_APB2ENR_TIM9EN;
+		
+		TIM9 -> CR1 &= ~TIM_CR1_CEN;
+		TIM9 -> CR1 |= TIM_CR1_ARPE;
 
-		TIM8 -> CNT = 0;
+		TIM9 -> CNT = 0;
 
 		double sys_core_clk = (double)SystemCoreClock;
 
@@ -60,37 +61,38 @@ void _timer_pwm_config2 (uint32_t buzzer_id){
 			arr = round((((sys_core_clk)/400)/(psc+1.0))-1.0);
 		}
 
-		TIM8 -> PSC = (uint32_t)psc;
-		TIM8 -> ARR = (uint32_t)arr;
+		TIM9 -> PSC = (uint32_t)psc;
+		TIM9 -> ARR = (uint32_t)arr;
 
-		TIM8 -> CCER &= ~TIM_CCER_CC2E;
+		TIM9 -> CCER &= ~TIM_CCER_CC1E;
 
-
-		TIM8 -> CCER &= ~TIM_CCER_CC2NP;
-		TIM8 -> CCER &= ~TIM_CCER_CC2P;
+		TIM9 -> CCER &= ~TIM_CCER_CC1NP;
+		TIM9 -> CCER &= ~TIM_CCER_CC1P;
 		
 		//enable pwm1
-		TIM8 -> CCMR1 &= ~TIM_CCMR1_OC2M_0;
-		TIM8 -> CCMR1 |= TIM_CCMR1_OC2M_1;
-		TIM8 -> CCMR1 |= TIM_CCMR1_OC2M_2;
+		TIM9 -> CCMR1 &= ~TIM_CCMR1_OC1M_0;
+		TIM9 -> CCMR1 |= TIM_CCMR1_OC1M_1;
+		TIM9 -> CCMR1 |= TIM_CCMR1_OC1M_2;
 
 		
 		//preload
-		TIM8 -> CCMR1 |= TIM_CCMR1_OC2PE;
+		TIM9 -> CCMR1 |= TIM_CCMR1_OC1PE;
 
-		TIM8 -> CCR1 = round(((TIM8->ARR)+1)/2);
+		TIM9 -> CCR1 = round(((TIM9->ARR)+1)/2);
+		
+		TIM9 -> EGR = TIM_EGR_UG;
 	}
 }
 
 void port_buzzer_set_freq (uint32_t buzzer_id, buzzer_t nota){
 	if (buzzer_id == PORT_REAR_PARKING_BUZZER_ID){
-		TIM8 -> CR1 &= ~TIM_CR1_CEN;
+		TIM9 -> CR1 &= ~TIM_CR1_CEN;
+
+		TIM9 -> CNT = 0;
 
 		if (nota.freq == 0) return;
 
-		TIM8 -> CR1 |= TIM_CR1_ARPE;
-
-		TIM8 -> CNT = 0;
+		//TIM9 -> CR1 |= TIM_CR1_ARPE;		
 
 		double sys_core_clk = (double)SystemCoreClock;
 
@@ -103,31 +105,33 @@ void port_buzzer_set_freq (uint32_t buzzer_id, buzzer_t nota){
 			arr = round((((sys_core_clk)/freq)/(psc+1.0))-1.0);
 		}
 
-		TIM8 -> PSC = (uint32_t)psc;
-		TIM8 -> ARR = (uint32_t)arr;
+		TIM9 -> PSC = (uint32_t)psc;
+		TIM9 -> ARR = (uint32_t)arr;
 
-		TIM8 -> CCER &= ~TIM_CCER_CC2E;
+		TIM9 -> CCER &= ~TIM_CCER_CC1E;
 
-
-		TIM8 -> CCER &= ~TIM_CCER_CC2NP;
-		TIM8 -> CCER &= ~TIM_CCER_CC2P;
+		TIM9 -> CCER &= ~TIM_CCER_CC1NP;
+		TIM9 -> CCER &= ~TIM_CCER_CC1P;
 		
 		//enable pwm1
-		TIM8 -> CCMR1 &= ~TIM_CCMR1_OC2M_0;
-		TIM8 -> CCMR1 |= TIM_CCMR1_OC2M_1;
-		TIM8 -> CCMR1 |= TIM_CCMR1_OC2M_2;
+		TIM9 -> CCMR1 &= ~TIM_CCMR1_OC1M_0;
+		TIM9 -> CCMR1 |= TIM_CCMR1_OC1M_1;
+		TIM9 -> CCMR1 |= TIM_CCMR1_OC1M_2;
 
 		
 		//preload
-		TIM8 -> CCMR1 |= TIM_CCMR1_OC2PE;
+		TIM9 -> CCMR1 |= TIM_CCMR1_OC1PE;
 
 		//50%
-		TIM8 -> CCR1 = round(((TIM8->ARR)+1)/2);
+		TIM9 -> CCR1 = round(((TIM9->ARR)+1)/2);
+
+		//enable
+		TIM9 -> CCER |= TIM_CCER_CC1E;
 
 		//actualizar valores
-		TIM8 -> EGR |= TIM_EGR_UG;
-		//enable
-		TIM8 -> CR1 |= TIM_CR1_CEN;
+		TIM9 -> EGR = TIM_EGR_UG;
+
+		TIM9 -> CR1 |= TIM_CR1_CEN;
 	}
 }
 
@@ -150,7 +154,7 @@ void port_buzzer_init (uint32_t buzzer_id){
 	);
 
 	_timer_pwm_config2(buzzer_id);
-	port_buzzer_set_freq(buzzer_id,(buzzer_t){400,1});
+	port_buzzer_set_freq(buzzer_id,(buzzer_t){600,1});
 	port_system_delay_ms(1000);
 	port_buzzer_set_freq(buzzer_id,(buzzer_t){0,1});
 }
