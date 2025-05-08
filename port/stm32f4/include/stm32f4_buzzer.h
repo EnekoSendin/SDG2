@@ -16,9 +16,9 @@
 
 /* Defines and enums ----------------------------------------------------------*/
 /* Defines */
-#define STM32F4_REAR_PARKING_BUZZER_GPIO GPIOA 
+#define STM32F4_PARKING_BUZZER_GPIO GPIOC 
 //tim ch1 PA2
  
-#define STM32F4_REAR_PARKING_BUZZER_PIN 2
+#define STM32F4_PARKING_BUZZER_PIN 7
 
 #endif /* STM32F4_BUZZER_SYSTEM_H_ */

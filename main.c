@@ -39,7 +39,7 @@ int main(void)
 	port_buzzer_init(0);
 	fsm_button_t *p_fsm_button = fsm_button_new(PORT_PARKING_BUTTON_DEBOUNCE_TIME_MS,PORT_PARKING_BUTTON_ID);
 	fsm_display_t *p_fsm_display = fsm_display_new(PORT_REAR_PARKING_DISPLAY_ID);
-	fsm_buzzer_t *p_fsm_buzzer = fsm_buzzer_new(PORT_REAR_PARKING_BUZZER_ID);
+	fsm_buzzer_t *p_fsm_buzzer = fsm_buzzer_new(PORT_PARKING_BUZZER_ID);
 	fsm_ultrasound_t *p_fsm_ultrasound = fsm_ultrasound_new(PORT_REAR_PARKING_SENSOR_ID);
 	fsm_urbanite_t *p_fsm_urbanite = fsm_urbanite_new(p_fsm_button,URBANITE_ON_OFF_PRESS_TIME_MS,URBANITE_PAUSE_DISPLAY_TIME_MS,p_fsm_ultrasound,p_fsm_display,p_fsm_buzzer);
 

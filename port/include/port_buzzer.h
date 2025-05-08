@@ -15,7 +15,7 @@
 /* Enums */
 
 /* Defines ----------------------------------------------------------*/
-#define PORT_REAR_PARKING_BUZZER_ID   0
+#define PORT_PARKING_BUZZER_ID   0
 #define PORT_BUZZER_MAX_VALUE 255
 #define BUZZER_OFF (buzzer_t){0, 0}
 #define COLOR_BASIC (buzzer_t){400,5000}
