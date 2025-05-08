@@ -28,6 +28,7 @@ enum  FSM_BUZZER_SYSTEM {
 #define INFO_MIN_CM 150
 #define OK_MIN_CM 175
 #define OK_MAX_CM 200
+
 /* Typedefs --------------------------------------------------------------------*/
 typedef struct fsm_buzzer_t fsm_buzzer_t;
 /* Function prototypes and explanation -------------------------------------------------*/

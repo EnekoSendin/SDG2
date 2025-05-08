@@ -45,13 +45,19 @@ stm32f4_buzzer_hw_t *_stm32f4_buzzer_get(uint32_t buzzer_id){
 
 void _timer_pwm_config2 (uint32_t buzzer_id){
 	if (buzzer_id == PORT_PARKING_BUZZER_ID){
+		//Habilitar contador TIM8
 		RCC -> APB2ENR |= RCC_APB2ENR_TIM8EN;
 		
+		//Enable contador
 		TIM8 -> CR1 &= ~TIM_CR1_CEN;
+
+		//Habilitar preload
 		TIM8 -> CR1 |= TIM_CR1_ARPE;
 
+		//Contador a cero
 		TIM8 -> CNT = 0;
 
+		//Configurar frecuencia en registros ARR y PSC
 		double sys_core_clk = (double)SystemCoreClock;
 
 		double psc = round((((sys_core_clk)/400)/(65535.0+1.0))-1.0);
@@ -64,23 +70,26 @@ void _timer_pwm_config2 (uint32_t buzzer_id){
 		TIM8 -> PSC = (uint32_t)psc;
 		TIM8 -> ARR = (uint32_t)arr;
 
+		//Disable output capture en canal2
 		TIM8 -> CCER &= ~TIM_CCER_CC2E;
 
+		//Limpiar bits de polaridad de canal2
 		TIM8 -> CCER &= ~TIM_CCER_CC2NP;
 		TIM8 -> CCER &= ~TIM_CCER_CC2P;
 
-		//en channel 2 esta en el registro CCMR1 en CCMR2 estan ch3 y 4
+		//en channel2 esta en el registro CCMR1 en CCMR2 estan ch3 y ch4
 		//enable pwm1
 		TIM8 -> CCMR1 &= ~TIM_CCMR1_OC2M_0;
 		TIM8 -> CCMR1 |= TIM_CCMR1_OC2M_1;
 		TIM8 -> CCMR1 |= TIM_CCMR1_OC2M_2;
 
-		
-		//preload
+		//preload en canal2
 		TIM8 -> CCMR1 |= TIM_CCMR1_OC2PE; 
 
+		//50% en canal 2
 		TIM8 -> CCR2 = round(((TIM8->ARR)+1)/2);
-		
+
+		//Habilitar contador	
 		TIM8 -> EGR = TIM_EGR_UG;
 	}
 }
@@ -88,14 +97,21 @@ void _timer_pwm_config2 (uint32_t buzzer_id){
 void port_buzzer_set_freq (uint32_t buzzer_id, buzzer_t nota){
 	if (buzzer_id == PORT_PARKING_BUZZER_ID){
 		
+		//Disable timer
 		TIM8 -> CR1 &= ~TIM_CR1_CEN;
 
+		//Disable output capture en canal2
+		TIM8 -> CCER &= ~TIM_CCER_CC2E;
+
+		//Disable output mode
+		TIM8->BDTR &= ~TIM_BDTR_MOE;
+
+		//Contador a cero
 		TIM8 -> CNT = 0;
 
 		if (nota.freq == 0) return;
 
-		//TIM8 -> CR1 |= TIM_CR1_ARPE;		
-
+		//Configurar frecuencia en registros ARR y PSC
 		double sys_core_clk = (double)SystemCoreClock;
 
 		double freq = (double)nota.freq;
@@ -110,32 +126,31 @@ void port_buzzer_set_freq (uint32_t buzzer_id, buzzer_t nota){
 		TIM8 -> PSC = (uint32_t)psc;
 		TIM8 -> ARR = (uint32_t)arr;
 
-		TIM8 -> CCER &= ~TIM_CCER_CC2E;
-
+		//Limpiar bits de polaridad de canal2
 		TIM8 -> CCER &= ~TIM_CCER_CC2NP;
 		TIM8 -> CCER &= ~TIM_CCER_CC2P;
 		
-		//enable pwm1
+		//enable pwm mode1 de canal2
 		TIM8 -> CCMR1 &= ~TIM_CCMR1_OC2M_0;
 		TIM8 -> CCMR1 |= TIM_CCMR1_OC2M_1;
 		TIM8 -> CCMR1 |= TIM_CCMR1_OC2M_2;
 
-		
-		//preload
+		//preload en canal2
 		TIM8 -> CCMR1 |= TIM_CCMR1_OC2PE;
 
 		//output mode activate
-		TIM8->BDTR|=TIM_BDTR_MOE;
+		TIM8->BDTR |= TIM_BDTR_MOE;
 
-		//50%
+		//50% en canal 2
 		TIM8 -> CCR2 = round(((TIM8->ARR)+1)/2);
 
-		//enable
+		//Enable output capture en canal2
 		TIM8 -> CCER |= TIM_CCER_CC2E;
 
-		//actualizar valores
+		//Actualizar valores de reloj
 		TIM8 -> EGR = TIM_EGR_UG;
 
+		//Habilitar contador
 		TIM8 -> CR1 |= TIM_CR1_CEN;
 	}
 }

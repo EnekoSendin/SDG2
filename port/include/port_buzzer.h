@@ -16,10 +16,11 @@
 
 /* Defines ----------------------------------------------------------*/
 #define PORT_PARKING_BUZZER_ID   0
-#define PORT_BUZZER_MAX_VALUE 255
-#define BUZZER_OFF (buzzer_t){0, 0}
-#define COLOR_BASIC (buzzer_t){400,5000}
 
+#define BUZZER_OFF (buzzer_t){0, 0}
+//#define COLOR_BASIC (buzzer_t){400,5000}
+
+// NOTAS en Hz
 #define DO 261
 #define RE 293
 #define MI 329
@@ -32,15 +33,14 @@
 /* Typedefs --------------------------------------------------------------------*/
 typedef struct
 {
-	uint32_t freq;//hz
-	uint32_t time;//ms
+	uint32_t freq; //frecuencia de la nota en Hz
+	uint32_t time; //tiempo de duracion de nota en ms
 } buzzer_t;
 
 /* Function prototypes and explanation -------------------------------------------------*/
 void port_buzzer_init (uint32_t buzzer_id);
  
-//Configure the HW specifications of a given buzzer. More...
- 
+//Configure the HW specifications of a given buzzer.
 void port_buzzer_set_freq (uint32_t buzzer_id, buzzer_t buzzer);
 
 #endif /* PORT_BUZZER_SYSTEM_H_ */

@@ -36,7 +36,8 @@ static bool 	check_activity (fsm_t *p_this){
 	fsm_urbanite_t *p_fsm = (fsm_urbanite_t *)(p_this);
 	if(fsm_button_check_activity(p_fsm->p_fsm_button) ||
 	 fsm_ultrasound_check_activity(p_fsm->p_fsm_ultrasound_rear)||
-	  fsm_display_check_activity(p_fsm->p_fsm_display_rear))
+	 fsm_display_check_activity(p_fsm->p_fsm_display_rear)||
+	 fsm_buzzer_check_activity(p_fsm->p_fsm_buzzer_rear))
 		return true;
 	return false;
 }//Check if any of the elements of the system is active.

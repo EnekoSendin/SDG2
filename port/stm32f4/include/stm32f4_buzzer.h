@@ -16,9 +16,9 @@
 
 /* Defines and enums ----------------------------------------------------------*/
 /* Defines */
-#define STM32F4_PARKING_BUZZER_GPIO GPIOC 
-//tim ch1 PA2
- 
+
+//TIM8 channel2 PC7
+#define STM32F4_PARKING_BUZZER_GPIO GPIOC
 #define STM32F4_PARKING_BUZZER_PIN 7
 
 #endif /* STM32F4_BUZZER_SYSTEM_H_ */

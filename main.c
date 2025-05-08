@@ -26,7 +26,6 @@
 
 /* Defines ------------------------------------------------------------------*/
 #define 	URBANITE_ON_OFF_PRESS_TIME_MS 1000
- 
 #define 	URBANITE_PAUSE_DISPLAY_TIME_MS 100
 /**
  * @brief  The application entry point.
@@ -36,7 +35,10 @@ int main(void)
 {
     /* Init board */
     port_system_init();
-	port_buzzer_init(0);
+
+	//Check if buzzer is active
+	//port_buzzer_init(PORT_PARKING_BUZZER_ID);
+
 	fsm_button_t *p_fsm_button = fsm_button_new(PORT_PARKING_BUTTON_DEBOUNCE_TIME_MS,PORT_PARKING_BUTTON_ID);
 	fsm_display_t *p_fsm_display = fsm_display_new(PORT_REAR_PARKING_DISPLAY_ID);
 	fsm_buzzer_t *p_fsm_buzzer = fsm_buzzer_new(PORT_PARKING_BUZZER_ID);
@@ -46,19 +48,18 @@ int main(void)
     /* Infinite loop */
     while (1)
     {
-		//printf("[URBANITE][%d] Estado\n", ((fsm_t*)p_fsm_urbanite)->current_state);
 		fsm_button_fire(p_fsm_button);
 		fsm_ultrasound_fire(p_fsm_ultrasound);
 		fsm_buzzer_fire(p_fsm_buzzer);
 		fsm_display_fire(p_fsm_display);
-	
 		fsm_urbanite_fire(p_fsm_urbanite);
-
     } // End of while(1)
+
 	fsm_button_destroy(p_fsm_button);
 	fsm_display_destroy(p_fsm_display);
 	fsm_buzzer_destroy(p_fsm_buzzer);
 	fsm_ultrasound_destroy(p_fsm_ultrasound);
 	fsm_urbanite_destroy(p_fsm_urbanite);
+
     return 0;
 }
