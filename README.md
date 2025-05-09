@@ -187,12 +187,12 @@ Teoricamente la pulsación larga del botón indica el inicio de la marcha atrás
 
 ### FUNCIONALIDADES de PLACA en V4
 
-**1.** El botón enciende y apaga el sistema Urbanite.
-**2.** Las distancias que se miden se muestran en la terminal del gdb-server, y el display se enciende de manera acorde.
-**3.** Una pulsación corta pausa el display pero se siguen imprimiendo los mensajes de log en la terminal. Pero estando pausado, si la distancia es muy pequeña se enciende el LED en rojo para avisar de una colisión inminente.
-**4.** Estando el sistema pausado, se puede apagar.
-**5.** Al encender la placa, nunca está en pausa.
-**6.** Estando apagada, la Urbanite no responde toma medidas ni muestra nada en el display.
+1. El botón enciende y apaga el sistema Urbanite.
+2. Las distancias que se miden se muestran en la terminal del gdb-server, y el display se enciende de manera acorde.
+3. Una pulsación corta pausa el display pero se siguen imprimiendo los mensajes de log en la terminal. Pero estando pausado, si la distancia es muy pequeña se enciende el LED en rojo para avisar de una colisión inminente.
+4. Estando el sistema pausado, se puede apagar.
+5. Al encender la placa, nunca está en pausa.
+6. Estando apagada, la Urbanite no responde toma medidas ni muestra nada en el display.
 
 ---
 
