@@ -43,7 +43,7 @@ stm32f4_buzzer_hw_t *_stm32f4_buzzer_get(uint32_t buzzer_id){
     }
 }
 
-void _timer_pwm_config2 (uint32_t buzzer_id){
+void _buzzer_timer_pwm_config (uint32_t buzzer_id){
 	if (buzzer_id == PORT_PARKING_BUZZER_ID){
 		//Habilitar contador TIM8
 		RCC -> APB2ENR |= RCC_APB2ENR_TIM8EN;
@@ -173,8 +173,10 @@ void port_buzzer_init (uint32_t buzzer_id){
 		3
 	);
 
-	_timer_pwm_config2(buzzer_id);
-	port_buzzer_set_freq(buzzer_id,(buzzer_t){600,1});
-	port_system_delay_ms(1000);
-	port_buzzer_set_freq(buzzer_id,(buzzer_t){0,1});
+	_buzzer_timer_pwm_config(buzzer_id);
+	
+	//Check if buzzer works
+	//port_buzzer_set_freq(buzzer_id,(buzzer_t){600,1});
+	//port_system_delay_ms(1000);
+	//port_buzzer_set_freq(buzzer_id,(buzzer_t){0,1});
 }

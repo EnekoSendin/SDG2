@@ -146,7 +146,7 @@ void 	fsm_buzzer_set_status (fsm_buzzer_t *p_fsm, bool status){
 	p_fsm->status = status;
 }
 
-bool 	fsm_check_buzzer_activity (fsm_buzzer_t *p_fsm){
+bool 	fsm_buzzer_check_activity (fsm_buzzer_t *p_fsm){
 	return (!(p_fsm->idle) && (check_buzzer_active((fsm_t*)p_fsm)));
 }
 

@@ -67,8 +67,6 @@ static bool 	check_pause_display (fsm_t *p_this){
 	return false;
 }//Check if it has been required to pause the display.
  
-
- 
 static bool 	check_no_activity (fsm_t *p_this){
 	return !check_activity(p_this);
 }//Check if all the elements of the system are inactive.
