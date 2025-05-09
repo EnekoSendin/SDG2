@@ -137,36 +137,36 @@ En la Versión 3, el sistema incluye una pantalla utilizando un LED RGB. El LED 
 
 ### Características de la Pantalla
 
-| Parámetro              | Valor                                                      |
+| **Parámetro**              | **Valor**                                                      |
 | ---------------------- | ---------------------------------------------------------- |
-| Pin LED rojo           | PB6                                                        |
-| Pin LED verde          | PB8                                                        |
-| Pin LED azul           | PB9                                                        |
-| Modo                   | Alternativo                                                |
-| Pull up/down           | Sin resistencia pull                                       |
-| Temporizador           | TIM4                                                       |
-| Canal LED rojo         | Funcion Alternativa 2 y Canal 1                            |
-| Canal LED verde        | Funcion Alternativa 2 y Canal 3                            |
-| Canal LED azul         | Funcion Alternativa 2 y Canal 4                            |
-| Modo PWM               | Modo PWM 1                                                 |
-| Prescaler              | A calcular para una frecuencia de 50 Hz                    |
-| Período                | A calcular para una frecuencia de 50 Hz                    |
-| Ciclo de trabajo rojo  | Variable (depende del color a mostrar)                     |
-| Ciclo de trabajo verde | Variable (depende del color a mostrar)                     |
-| Ciclo de trabajo azul  | Variable (depende del color a mostrar)                     |
+| **Pin LED rojo**           | PB6                                                        |
+| **Pin LED verde**          | PB8                                                        |
+| **Pin LED azul**           | PB9                                                        |
+| **Modo**                   | Alternativo                                                |
+| **Pull up/down**           | Sin resistencia pull                                       |
+| **Temporizador**           | TIM4                                                       |
+| **Canal LED rojo**         | Funcion Alternativa 2 y Canal 1                            |
+| **Canal LED verde**        | Funcion Alternativa 2 y Canal 3                            |
+| **Canal LED azul**         | Funcion Alternativa 2 y Canal 4                            |
+| **Modo PWM**               | Modo PWM 1                                                 |
+| **Prescaler**              | A calcular para una frecuencia de 50 Hz                    |
+| **Período**                | A calcular para una frecuencia de 50 Hz                    |
+| **Ciclo de trabajo rojo**  | Variable (depende del color a mostrar)                     |
+| **Ciclo de trabajo verde** | Variable (depende del color a mostrar)                     |
+| **Ciclo de trabajo azul**  | Variable (depende del color a mostrar)                     |
 
 ### Mapeo de Distancia a Color
 
 La siguiente tabla define los **valores del ciclo de trabajo** según la distancia medida. Estos no son los valores directos que se insertan en el registro `CCR` deben ser escalados con `PORT_DISPLAY_RGB_MAX_VALUE`, es decir si el valor es 37% será 37% de 255.
 
-| Distancia (cm)  | Color          | LED rojo | LED verde | LED azul |
+| **Distancia (cm)**  | **Color**          | **LED rojo** | **LED verde** | **LED azul** |
 | --------------- | -------------- | -------- | --------- | -------- |
-| \[0-25]         | Rojo (peligro) | 100%     | 0%        | 0%       |
-| \[25-50]        | Amarillo       | 37%      | 37%       | 0%       |
-| \[50-150]       | Verde          | 0%       | 100%      | 0%       |
-| \[150-175]      | Turquesa       | 10%      | 35%       | 32%      |
-| \[175-200]      | Azul           | 0%       | 0%        | 100%     |
-| >200 o inválido | Apagado        | 0%       | 0%        | 0%       |
+| **\[0-25]**         | Rojo (peligro) | 100%     | 0%        | 0%       |
+| **\[25-50]**        | Amarillo       | 37%      | 37%       | 0%       |
+| **\[50-150]**       | Verde          | 0%       | 100%      | 0%       |
+| **\[150-175]**      | Turquesa       | 10%      | 35%       | 32%      |
+| **\[175-200]**      | Azul           | 0%       | 0%        | 100%     |
+| **>200 o inválido** | Apagado        | 0%       | 0%        | 0%       |
 
 
 ## Version 4
@@ -183,14 +183,18 @@ Para distinguir si la Urbanite se debe pausar o apagar se mide el tiempo que est
 
 Teoricamente la pulsación larga del botón indica el inicio de la marcha atrás de un coche y por tanto se enciende el sistema de aparcamiento Urbanite, y la pulsación corta servirá para pausar el display.
 
+---
+
 ### FUNCIONALIDADES de PLACA en V4
 
-1. El botón enciende y apaga el sistema Urbanite.
-2. Las distancias que se miden se muestran en la terminal del gdb-server, y el display se enciende de manera acorde.
-3. Una pulsación corta pausa el display pero se siguen imprimiendo los mensajes de log en la terminal. Pero estando pausado, si la distancia es muy pequeña se enciende el LED en rojo para avisar de una colisión inminente.
-4. Estando el sistema pausado, se puede apagar.
-5. Al encender la placa, nunca está en pausa.
-6. Estando apagada, la Urbanite no responde toma medidas ni muestra nada en el display.
+**1.** El botón enciende y apaga el sistema Urbanite.
+**2.** Las distancias que se miden se muestran en la terminal del gdb-server, y el display se enciende de manera acorde.
+**3.** Una pulsación corta pausa el display pero se siguen imprimiendo los mensajes de log en la terminal. Pero estando pausado, si la distancia es muy pequeña se enciende el LED en rojo para avisar de una colisión inminente.
+**4.** Estando el sistema pausado, se puede apagar.
+**5.** Al encender la placa, nunca está en pausa.
+**6.** Estando apagada, la Urbanite no responde toma medidas ni muestra nada en el display.
+
+---
 
 ## Version 5
 
