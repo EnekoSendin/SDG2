@@ -131,11 +131,11 @@ El sistema emplea **tres temporizadores**:
 | **Prioridad** | 5 |
 | **Subprioridad** | 0 |
 
-## Version 3
+# Version 3
 
 En la Versión 3, el sistema incluye una pantalla utilizando un LED RGB. El LED RGB está conectado a los pines PB6 (rojo), PB8 (verde) y PB9 (azul). El sistema utiliza el temporizador TIM4 para controlar la frecuencia de la señal PWM para cada color. Esta configuración permite que el LED RGB indique visualmente la distancia a un objeto.
 
-### Características de la Pantalla
+## Características de la Pantalla
 
 | **Parámetro**              | **Valor**                                                      |
 | ---------------------- | ---------------------------------------------------------- |
@@ -155,7 +155,7 @@ En la Versión 3, el sistema incluye una pantalla utilizando un LED RGB. El LED 
 | **Ciclo de trabajo verde** | Variable (depende del color a mostrar)                     |
 | **Ciclo de trabajo azul**  | Variable (depende del color a mostrar)                     |
 
-### Mapeo de Distancia a Color
+## Mapeo de Distancia a Color
 
 La siguiente tabla define los **valores del ciclo de trabajo** según la distancia medida. Estos no son los valores directos que se insertan en el registro `CCR` deben ser escalados con `PORT_DISPLAY_RGB_MAX_VALUE`, es decir si el valor es 37% será 37% de 255.
 
@@ -169,7 +169,7 @@ La siguiente tabla define los **valores del ciclo de trabajo** según la distanc
 | **>200 o inválido** | Apagado        | 0%       | 0%        | 0%       |
 
 
-## Version 4
+# Version 4
 
 En la Versión 4, el sistema completa su máquina de estados (FSM) para interactuar con el botón del usuario, el transceptor ultrasónico y la pantalla. Además, el sistema muestra la distancia al objeto detectado en la pantalla.
 
@@ -185,7 +185,7 @@ Teoricamente la pulsación larga del botón indica el inicio de la marcha atrás
 
 ---
 
-### FUNCIONALIDADES de PLACA en V4
+## FUNCIONALIDADES de PLACA en V4
 
 1. El botón enciende y apaga el sistema Urbanite.
 2. Las distancias que se miden se muestran en la terminal del gdb-server, y el display se enciende de manera acorde.
@@ -196,6 +196,6 @@ Teoricamente la pulsación larga del botón indica el inicio de la marcha atrás
 
 ---
 
-## Version 5
+# Version 5
 
 Breve descripción de la versión 5.
