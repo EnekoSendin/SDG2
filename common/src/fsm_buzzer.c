@@ -58,7 +58,7 @@ static bool check_buzzer_active (fsm_t *p_this){
 	fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);
 	return p_fsm -> status;
 }
-static bool check_buzzer_set_new_color (fsm_t *p_this){
+static bool check_buzzer_set_new_nota (fsm_t *p_this){
 	fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);
 	return p_fsm -> new_nota;
 }
@@ -75,7 +75,7 @@ static void 	do_buzzer_set_on (fsm_t *p_this){
 	port_buzzer_set_freq(p_fsm->buzzer_id,BUZZER_OFF);
 }
  
-static void 	do_buzzer_set_color (fsm_t *p_this){
+static void 	do_buzzer_set_nota (fsm_t *p_this){
 	fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);
 	buzzer_t nota;
 	_compute_buzzer_levels(&nota,p_fsm->distance_cm);
@@ -94,7 +94,7 @@ static void 	do_buzzer_set_off (fsm_t *p_this){
 /* Other auxiliary functions */
 static fsm_trans_t 	fsm_trans_buzzer [] = {
 	{WAIT_BUZZER,check_buzzer_active,SET_BUZZER,do_buzzer_set_on},
-	{SET_BUZZER,check_buzzer_set_new_color,SET_BUZZER,do_buzzer_set_color},
+	{SET_BUZZER,check_buzzer_set_new_nota,SET_BUZZER,do_buzzer_set_nota},
 	{SET_BUZZER,check_buzzer_off,WAIT_BUZZER,do_buzzer_set_off},
 	{-1,NULL,-1,NULL}
 };
