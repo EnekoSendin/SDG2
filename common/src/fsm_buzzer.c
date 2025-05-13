@@ -24,31 +24,38 @@ struct  fsm_buzzer_t
 	bool 	status;
 	bool 	idle;
 	uint32_t 	buzzer_id;
+	uint32_t 	counter;
+	uint32_t	max;
 };
 /* Project includes */
 
 /* Typedefs --------------------------------------------------------------------*/
 
 /* Private functions -----------------------------------------------------------*/
-void 	_compute_buzzer_levels (buzzer_t *p_nota, int32_t distance_cm){
+void 	_compute_buzzer_levels (buzzer_t *p_nota,uint32_t *max, int32_t distance_cm){
 	if (distance_cm>= DANGER_MIN_CM && distance_cm<=WARNING_MIN_CM){
 		*p_nota = (buzzer_t){DO,1};
+		*max = 0;
 		return;
 	}
 	if (distance_cm> WARNING_MIN_CM && distance_cm<=NO_PROBLEM_MIN_CM){
 		*p_nota = (buzzer_t){RE,1};
+		*max = 8;
 		return;
 	}
 	if (distance_cm> NO_PROBLEM_MIN_CM && distance_cm<=INFO_MIN_CM){
 		*p_nota = (buzzer_t){MI,1};
+		*max = 12;
 		return;
 	}
 	if (distance_cm> INFO_MIN_CM && distance_cm<=OK_MIN_CM){
 		*p_nota = (buzzer_t){FA,1};
+		*max = 16;
 		return;
 	}
 	if (distance_cm> OK_MIN_CM && distance_cm<=OK_MAX_CM){
 		*p_nota = (buzzer_t){SOL,1};
+		*max = 20;
 		return;
 	}
 	*p_nota = BUZZER_OFF;
@@ -67,7 +74,28 @@ static bool check_buzzer_off (fsm_t *p_this){
 	fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);
 	return !(p_fsm -> status);
 }
- 
+
+static bool check_buzzer_off_time(fsm_t *p_this){
+	fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);
+	p_fsm->counter+=1;
+	if (p_fsm->counter>(p_fsm->max)){
+		p_fsm->counter = 0;
+		//printf("ON");
+		return true;
+	}
+	return false;
+}
+
+static bool check_buzzer_on_time (fsm_t *p_this){
+	fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);
+	p_fsm->counter+=1;
+	if ((p_fsm->max != 0)&& (p_fsm->counter>(p_fsm->max))){
+		p_fsm->counter = 0;
+		//printf("OFF");
+		return true;
+	}
+	return false;
+}
 
 /* State machine output or action functions */
 static void 	do_buzzer_set_on (fsm_t *p_this){
@@ -78,8 +106,10 @@ static void 	do_buzzer_set_on (fsm_t *p_this){
 static void 	do_buzzer_set_nota (fsm_t *p_this){
 	fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);
 	buzzer_t nota;
-	_compute_buzzer_levels(&nota,p_fsm->distance_cm);
+	uint32_t max_pl;
+	_compute_buzzer_levels(&nota,&max_pl,p_fsm->distance_cm);
 	port_buzzer_set_freq(p_fsm->buzzer_id,nota);
+	p_fsm->max = max_pl;
 	p_fsm->new_nota = false;
 	p_fsm->idle = true;
 }
@@ -93,9 +123,12 @@ static void 	do_buzzer_set_off (fsm_t *p_this){
 
 /* Other auxiliary functions */
 static fsm_trans_t 	fsm_trans_buzzer [] = {
-	{WAIT_BUZZER,check_buzzer_active,SET_BUZZER,do_buzzer_set_on},
-	{SET_BUZZER,check_buzzer_set_new_nota,SET_BUZZER,do_buzzer_set_nota},
-	{SET_BUZZER,check_buzzer_off,WAIT_BUZZER,do_buzzer_set_off},
+	{QUIETO_PARAO_BUZZER,check_buzzer_active,PIPIPIPI_BUZZER,do_buzzer_set_on},
+	{PIPIPIPI_BUZZER,check_buzzer_on_time,CALLAITO_BUZZER,do_buzzer_set_on},
+	{PIPIPIPI_BUZZER,check_buzzer_set_new_nota,PIPIPIPI_BUZZER,do_buzzer_set_nota},
+	{PIPIPIPI_BUZZER,check_buzzer_off,QUIETO_PARAO_BUZZER,do_buzzer_set_off},
+	{CALLAITO_BUZZER,check_buzzer_off_time,PIPIPIPI_BUZZER,do_buzzer_set_nota},
+	{CALLAITO_BUZZER,check_buzzer_off,QUIETO_PARAO_BUZZER,do_buzzer_set_off},
 	{-1,NULL,-1,NULL}
 };
 
@@ -108,6 +141,8 @@ static void 	fsm_buzzer_init (fsm_buzzer_t *p_fsm_buzzer, uint32_t buzzer_id){
 	p_fsm_buzzer ->idle = false;
 	p_fsm_buzzer ->status = false;
 	p_fsm_buzzer ->new_nota = false;
+	p_fsm_buzzer ->max = 10;
+	p_fsm_buzzer ->counter = 0;
 	port_buzzer_init(buzzer_id);
 }
  

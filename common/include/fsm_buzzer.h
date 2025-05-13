@@ -18,8 +18,9 @@
 /* Defines and enums ----------------------------------------------------------*/
 /* Enums */
 enum  FSM_BUZZER_SYSTEM {
-  WAIT_BUZZER = 0,
-  SET_BUZZER
+  QUIETO_PARAO_BUZZER = 0,
+  PIPIPIPI_BUZZER,
+  CALLAITO_BUZZER
 };
 /* Defines  ----------------------------------------------------------*/
 #define DANGER_MIN_CM 0
