@@ -40,12 +40,12 @@ void 	_compute_buzzer_levels (buzzer_t *p_nota,uint32_t *max, int32_t distance_c
 	}
 	if (distance_cm> WARNING_MIN_CM && distance_cm<=NO_PROBLEM_MIN_CM){
 		*p_nota = (buzzer_t){RE,1};
-		*max = 8;
+		*max = 100;
 		return;
 	}
 	if (distance_cm> NO_PROBLEM_MIN_CM && distance_cm<=INFO_MIN_CM){
 		*p_nota = (buzzer_t){MI,1};
-		*max = 12;
+		*max = 1000;
 		return;
 	}
 	if (distance_cm> INFO_MIN_CM && distance_cm<=OK_MIN_CM){
@@ -77,9 +77,9 @@ static bool check_buzzer_off (fsm_t *p_this){
 
 static bool check_buzzer_off_time(fsm_t *p_this){
 	fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);
-	p_fsm->counter+=1;
+	p_fsm->counter+=get_port_buzzer_counter(p_fsm->buzzer_id);
 	if (p_fsm->counter>(p_fsm->max)){
-		p_fsm->counter = 0;
+		port_buzzer_counter_reset(p_fsm->buzzer_id);
 		//printf("ON");
 		return true;
 	}
@@ -88,10 +88,10 @@ static bool check_buzzer_off_time(fsm_t *p_this){
 
 static bool check_buzzer_on_time (fsm_t *p_this){
 	fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);
-	p_fsm->counter+=1;
-	if ((p_fsm->max != 0)&& (p_fsm->counter>(p_fsm->max))){
-		p_fsm->counter = 0;
-		//printf("OFF");
+	p_fsm->counter+=get_port_buzzer_counter(p_fsm->buzzer_id);
+	if ((p_fsm->max!=0)&&(p_fsm->counter>(p_fsm->max))){
+		port_buzzer_counter_reset(p_fsm->buzzer_id);
+		//printf("ON");
 		return true;
 	}
 	return false;

@@ -24,6 +24,7 @@ typedef struct
 {
     GPIO_TypeDef * p_port_buzzer;
 	uint8_t pin_buzzer;
+	uint32_t pipi_counter;
 } stm32f4_buzzer_hw_t;
 
 /* Global variables */
@@ -93,7 +94,38 @@ void _buzzer_timer_pwm_config (uint32_t buzzer_id){
 		TIM8 -> EGR = TIM_EGR_UG;
 	}
 }
+static void _timer_9_setup(uint32_t buzzer_id){
+	if(buzzer_id == PORT_PARKING_BUZZER_ID){
+		RCC->APB2ENR |= RCC_APB2ENR_TIM9EN;
+		
+		TIM9 -> CR1 &= ~TIM_CR1_CEN;
 
+		//TIM9->CR1 |= TIM_CR1_ARPE;
+
+		double sys_core_clk = (double)SystemCoreClock;
+
+		double psc = round((((sys_core_clk)/2.0)/(65535.0+1.0))-1.0);
+		double arr = round((((sys_core_clk)/2.0)/(psc+1.0))-1.0);
+		if (arr > 65535.0){
+			psc += 1.0;
+			arr = round((((sys_core_clk)/2.0)/(psc+1.0))-1.0);
+		}
+
+		TIM9 -> PSC = (uint32_t)psc;
+		TIM9 -> ARR = (uint32_t)arr;
+
+		
+		//TIM9->EGR |= TIM_EGR_UG;
+	
+		TIM9 -> DIER |= TIM_DIER_UIE ; /* Interrumpe al actualizar */
+
+		TIM9 -> CR1 |= TIM_CR1_CEN;
+		TIM9 -> SR &= ~TIM_SR_UIF;
+	
+		NVIC_EnableIRQ(TIM1_BRK_TIM9_IRQn);
+		NVIC_SetPriority(TIM1_BRK_TIM9_IRQn , NVIC_EncodePriority(NVIC_GetPriorityGrouping(),1,0));
+	}
+}
 void port_buzzer_set_freq (uint32_t buzzer_id, buzzer_t nota){
 	if (buzzer_id == PORT_PARKING_BUZZER_ID){
 		
@@ -156,10 +188,24 @@ void port_buzzer_set_freq (uint32_t buzzer_id, buzzer_t nota){
 }
 
 /* Public functions -----------------------------------------------------------*/
+void port_buzzer_counter_add(uint32_t buzzer_id){
+	stm32f4_buzzer_hw_t *p_buzzer = _stm32f4_buzzer_get(buzzer_id);
+	p_buzzer->pipi_counter+=1;
 
+}
+void port_buzzer_counter_reset(uint32_t buzzer_id){
+	stm32f4_buzzer_hw_t *p_buzzer = _stm32f4_buzzer_get(buzzer_id);
+	p_buzzer->pipi_counter=0;
+
+}
+uint32_t get_port_buzzer_counter(uint32_t buzzer_id){
+	stm32f4_buzzer_hw_t *p_buzzer = _stm32f4_buzzer_get(buzzer_id);
+	return p_buzzer->pipi_counter;
+
+}
 void port_buzzer_init (uint32_t buzzer_id){
 	stm32f4_buzzer_hw_t *p_buzzer = _stm32f4_buzzer_get(buzzer_id);
-	
+	p_buzzer->pipi_counter=0;
 	stm32f4_system_gpio_config(
 		p_buzzer -> p_port_buzzer,
 		p_buzzer -> pin_buzzer,
@@ -174,6 +220,7 @@ void port_buzzer_init (uint32_t buzzer_id){
 	);
 
 	_buzzer_timer_pwm_config(buzzer_id);
+	_timer_9_setup(buzzer_id);
 	
 	//Check if buzzer works
 	//port_buzzer_set_freq(buzzer_id,(buzzer_t){600,1});

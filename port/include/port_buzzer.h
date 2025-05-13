@@ -42,5 +42,7 @@ void port_buzzer_init (uint32_t buzzer_id);
  
 //Configure the HW specifications of a given buzzer.
 void port_buzzer_set_freq (uint32_t buzzer_id, buzzer_t buzzer);
-
+void port_buzzer_counter_add(uint32_t buzzer_id);
+void port_buzzer_counter_reset(uint32_t buzzer_id);
+uint32_t get_port_buzzer_counter(uint32_t buzzer_id);
 #endif /* PORT_BUZZER_SYSTEM_H_ */
