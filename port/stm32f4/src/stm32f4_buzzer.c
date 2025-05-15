@@ -1,8 +1,8 @@
 /**
  * @file stm32f4_buzzer.c
  * @brief Portable functions to interact with the buzzer system FSM library. All portable functions must be implemented in this file.
- * @author alumno1
- * @author alumno2
+ * @author Eneko Emilio Sendín Gallastegi
+ * @author Rodrigo Gutierrez Fontán
  * @date fecha
  */
 
@@ -49,7 +49,7 @@ void _buzzer_timer_pwm_config (uint32_t buzzer_id){
 		//Habilitar contador TIM8
 		RCC -> APB2ENR |= RCC_APB2ENR_TIM8EN;
 		
-		//Enable contador
+		//Disable contador
 		TIM8 -> CR1 &= ~TIM_CR1_CEN;
 
 		//Habilitar preload
@@ -78,51 +78,56 @@ void _buzzer_timer_pwm_config (uint32_t buzzer_id){
 		TIM8 -> CCER &= ~TIM_CCER_CC2NP;
 		TIM8 -> CCER &= ~TIM_CCER_CC2P;
 
-		//en channel2 esta en el registro CCMR1 en CCMR2 estan ch3 y ch4
-		//enable pwm1
+		//En channel2 esta en el registro CCMR1 (CCMR2 estan channel3 y channel4)
+		//Enable PWM1
 		TIM8 -> CCMR1 &= ~TIM_CCMR1_OC2M_0;
 		TIM8 -> CCMR1 |= TIM_CCMR1_OC2M_1;
 		TIM8 -> CCMR1 |= TIM_CCMR1_OC2M_2;
 
-		//preload en canal2
+		//Preload en canal2
 		TIM8 -> CCMR1 |= TIM_CCMR1_OC2PE; 
 
 		//50% en canal 2
 		TIM8 -> CCR2 = round(((TIM8->ARR)+1)/2);
 
-		//Habilitar contador	
+		//Actualizar registros del contador	
 		TIM8 -> EGR = TIM_EGR_UG;
 	}
 }
 static void _timer_9_setup(uint32_t buzzer_id){
 	if(buzzer_id == PORT_PARKING_BUZZER_ID){
+		//Habilitar contador TIM9
 		RCC->APB2ENR |= RCC_APB2ENR_TIM9EN;
 		
+		//Disable contador
 		TIM9 -> CR1 &= ~TIM_CR1_CEN;
 
-		//TIM9->CR1 |= TIM_CR1_ARPE;
+		//Habilitar preload
+		TIM9->CR1 |= TIM_CR1_ARPE;
 
-		double sys_core_clk = (double)SystemCoreClock;
+		//Configurar frecuencia en registros ARR y PSC (25ms)
+		double psc = 16000; //convertir a ms
+		double arr = 25; // tiempo hasta overflow
 
-		double psc = round((((sys_core_clk)/2.0)/(65535.0+1.0))-1.0);
-		double arr = round((((sys_core_clk)/2.0)/(psc+1.0))-1.0);
-		if (arr > 65535.0){
-			psc += 1.0;
-			arr = round((((sys_core_clk)/2.0)/(psc+1.0))-1.0);
-		}
+		TIM9 -> PSC = (uint32_t)(psc-1);
+		TIM9 -> ARR = (uint32_t)(arr-1);
 
-		TIM9 -> PSC = (uint32_t)psc;
-		TIM9 -> ARR = (uint32_t)arr;
-
-		
-		//TIM9->EGR |= TIM_EGR_UG;
+		//Actualizar registros del contador	
+		TIM9->EGR |= TIM_EGR_UG;
 	
-		TIM9 -> DIER |= TIM_DIER_UIE ; /* Interrumpe al actualizar */
+		// Habilitar interrupción al actualizar
+		TIM9 -> DIER |= TIM_DIER_UIE ;
 
+		//Habilitar contador
 		TIM9 -> CR1 |= TIM_CR1_CEN;
+
+		//Limpiar registro de interrupción
 		TIM9 -> SR &= ~TIM_SR_UIF;
-	
+		
+		//Habilitar interrupción del TIM9
 		NVIC_EnableIRQ(TIM1_BRK_TIM9_IRQn);
+
+		//Prioridad del TIM9 a 1
 		NVIC_SetPriority(TIM1_BRK_TIM9_IRQn , NVIC_EncodePriority(NVIC_GetPriorityGrouping(),1,0));
 	}
 }
@@ -195,8 +200,10 @@ void port_buzzer_counter_add(uint32_t buzzer_id){
 }
 void port_buzzer_counter_reset(uint32_t buzzer_id){
 	stm32f4_buzzer_hw_t *p_buzzer = _stm32f4_buzzer_get(buzzer_id);
+	TIM9 -> CR1 &= ~TIM_CR1_CEN;
+	TIM9->CNT = 0;
 	p_buzzer->pipi_counter=0;
-
+	TIM9 -> CR1 |= TIM_CR1_CEN;
 }
 uint32_t get_port_buzzer_counter(uint32_t buzzer_id){
 	stm32f4_buzzer_hw_t *p_buzzer = _stm32f4_buzzer_get(buzzer_id);

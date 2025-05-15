@@ -1,8 +1,8 @@
 /**
  * @file fsm_buzzer.c
- * @brief Display system FSM main file.
- * @author alumno1
- * @author alumno2
+ * @brief Buzzer system FSM main file.
+ * @author Eneko Emilio Sendín Gallastegi
+ * @author Rodrigo Gutierrez Fontán
  * @date fecha
  */
 
@@ -40,17 +40,17 @@ void 	_compute_buzzer_levels (buzzer_t *p_nota,uint32_t *max, int32_t distance_c
 	}
 	if (distance_cm> WARNING_MIN_CM && distance_cm<=NO_PROBLEM_MIN_CM){
 		*p_nota = (buzzer_t){RE,1};
-		*max = 100;
+		*max = 5;
 		return;
 	}
 	if (distance_cm> NO_PROBLEM_MIN_CM && distance_cm<=INFO_MIN_CM){
 		*p_nota = (buzzer_t){MI,1};
-		*max = 1000;
+		*max = 10;
 		return;
 	}
 	if (distance_cm> INFO_MIN_CM && distance_cm<=OK_MIN_CM){
 		*p_nota = (buzzer_t){FA,1};
-		*max = 16;
+		*max = 15;
 		return;
 	}
 	if (distance_cm> OK_MIN_CM && distance_cm<=OK_MAX_CM){
@@ -77,7 +77,7 @@ static bool check_buzzer_off (fsm_t *p_this){
 
 static bool check_buzzer_off_time(fsm_t *p_this){
 	fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);
-	p_fsm->counter+=get_port_buzzer_counter(p_fsm->buzzer_id);
+	p_fsm->counter = get_port_buzzer_counter(p_fsm->buzzer_id);
 	if (p_fsm->counter>(p_fsm->max)){
 		port_buzzer_counter_reset(p_fsm->buzzer_id);
 		//printf("ON");
@@ -88,10 +88,10 @@ static bool check_buzzer_off_time(fsm_t *p_this){
 
 static bool check_buzzer_on_time (fsm_t *p_this){
 	fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);
-	p_fsm->counter+=get_port_buzzer_counter(p_fsm->buzzer_id);
+	p_fsm->counter = get_port_buzzer_counter(p_fsm->buzzer_id);
 	if ((p_fsm->max!=0)&&(p_fsm->counter>(p_fsm->max))){
 		port_buzzer_counter_reset(p_fsm->buzzer_id);
-		//printf("ON");
+		//printf("OFF");
 		return true;
 	}
 	return false;
@@ -106,10 +106,10 @@ static void 	do_buzzer_set_on (fsm_t *p_this){
 static void 	do_buzzer_set_nota (fsm_t *p_this){
 	fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);
 	buzzer_t nota;
-	uint32_t max_pl;
-	_compute_buzzer_levels(&nota,&max_pl,p_fsm->distance_cm);
+	uint32_t max_value;
+	_compute_buzzer_levels(&nota, &max_value, p_fsm->distance_cm);
 	port_buzzer_set_freq(p_fsm->buzzer_id,nota);
-	p_fsm->max = max_pl;
+	p_fsm->max = max_value;
 	p_fsm->new_nota = false;
 	p_fsm->idle = true;
 }

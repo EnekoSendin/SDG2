@@ -1,8 +1,8 @@
 /**
- * @file port_display.h
+ * @file port_buzzer.h
  * @brief Header for the portable functions to interact with the HW of the BUZZER system. The functions must be implemented in the platform-specific code.
- * @author alumno1
- * @author alumno2
+ * @author Eneko Emilio Sendín Gallastegi
+ * @author Rodrigo Gutierrez Fontán
  * @date fecha
  */
 #ifndef PORT_BUZZER_SYSTEM_H_

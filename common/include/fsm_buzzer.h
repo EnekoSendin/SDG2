@@ -1,8 +1,8 @@
 /**
  * @file fsm_buzzer.h
  * @brief Header for fsm_buzzer.c file.
- * @author alumno1
- * @author alumno2
+ * @author Eneko Emilio Sendín Gallastegi
+ * @author Rodrigo Gutierrez Fontán
  * @date fecha
  */
 
