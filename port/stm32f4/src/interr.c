@@ -76,7 +76,11 @@ void TIM5_IRQHandler(){
 	port_ultrasound_set_trigger_ready(PORT_REAR_PARKING_SENSOR_ID,true);
 }
 
-//IRQHandler para el TIM9
+/**
+ * @brief Rutina de atencion a la interrupcion del timer 9.
+ *
+ * @note Se encarga de contar el número de overflows del timer.
+ */
 void TIM1_BRK_TIM9_IRQHandler(){
 	TIM9->SR &= ~TIM_SR_UIF;
 	port_buzzer_counter_add(PORT_PARKING_BUZZER_ID);
@@ -87,7 +91,6 @@ void TIM1_BRK_TIM9_IRQHandler(){
  *
  * @note Controla la duracion de la señal eco.
  */
-
 void TIM2_IRQHandler(){
 	port_system_systick_resume();
 	if((TIM2->SR) & TIM_SR_UIF){

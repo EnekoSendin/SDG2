@@ -20,6 +20,10 @@
 
 /* Defines and enums ----------------------------------------------------------*/
 
+#define NUM_STATES 3
+#define STATE_PAUSED 0
+#define STATE_PULSED 1
+#define STATE_CONTINUOUS 2
 
 /**
  * @brief Estados de la maquina de estados

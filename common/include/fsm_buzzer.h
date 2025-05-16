@@ -64,4 +64,9 @@ void 	fsm_buzzer_set_state (fsm_buzzer_t *p_fsm, int8_t state);
  	//Set the state of the buzzer FSM. 
 
 uint32_t 	fsm_buzzer_get_distance (fsm_buzzer_t *p_fsm);
+
+void fsm_buzzer_pulsed_state(fsm_buzzer_t *p_fsm);
+
+void fsm_buzzer_continuous_state(fsm_buzzer_t *p_fsm);
+
 #endif /* FSM_BUZZER_SYSTEM_H_ */

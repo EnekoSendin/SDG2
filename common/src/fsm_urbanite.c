@@ -25,6 +25,7 @@ struct fsm_urbanite_t
 	uint32_t on_off_press_time_ms;
 	uint32_t pause_display_time_ms;
 	bool is_paused;
+	uint32_t state;
 	fsm_ultrasound_t *p_fsm_ultrasound_rear;
 	fsm_display_t *p_fsm_display_rear;
 	fsm_buzzer_t *p_fsm_buzzer_rear;
@@ -107,13 +108,29 @@ static void 	do_display_distance (fsm_t *p_this){
 static void 	do_pause_display (fsm_t *p_this){
 	fsm_urbanite_t *p_fsm = (fsm_urbanite_t *)(p_this);
 	fsm_button_reset_duration(p_fsm->p_fsm_button);
-	p_fsm->is_paused = !(p_fsm->is_paused);
+	p_fsm->state = (p_fsm->state + 1) % NUM_STATES;
+
+	if (p_fsm->state == STATE_PAUSED)
+		p_fsm->is_paused = true;
+	else
+		p_fsm->is_paused = false;
+
+	if (p_fsm->state == STATE_PULSED)
+		fsm_buzzer_pulsed_state(p_fsm->p_fsm_buzzer_rear);
+	else
+		fsm_buzzer_continuous_state(p_fsm->p_fsm_buzzer_rear);
+
 	fsm_display_set_status(p_fsm->p_fsm_display_rear,!(p_fsm->is_paused));
 	fsm_buzzer_set_status(p_fsm->p_fsm_buzzer_rear,!(p_fsm->is_paused));
-	if (p_fsm->is_paused)
+	
+	if (p_fsm->state == STATE_PAUSED)
 		printf("[URBANITE][%ld] Urbanite system display PAUSE\n", port_system_get_millis());
-	else
+	if (p_fsm->state == STATE_PULSED){
 		printf("[URBANITE][%ld] Urbanite system display RESUME\n", port_system_get_millis());
+		printf("[URBANITE][%ld] Urbanite system PULSED display\n", port_system_get_millis());
+	}
+	if (p_fsm->state == STATE_CONTINUOUS)
+		printf("[URBANITE][%ld] Urbanite system CONTINUOUS display\n", port_system_get_millis());
 }//Pause or resume the display system.
  
 static void 	do_stop_urbanite (fsm_t *p_this){
@@ -165,6 +182,7 @@ static void 	fsm_urbanite_init (fsm_urbanite_t *p_fsm_urbanite, fsm_button_t *p_
 	p_fsm_urbanite->p_fsm_display_rear = p_fsm_display_rear;
 	p_fsm_urbanite->p_fsm_buzzer_rear = p_fsm_buzzer_rear;
 	p_fsm_urbanite->is_paused = false;
+	p_fsm_urbanite->state = STATE_PULSED;
 }//Create a new Urbanite FSM.
  
 fsm_urbanite_t * 	fsm_urbanite_new (fsm_button_t *p_fsm_button, uint32_t on_off_press_time_ms, uint32_t pause_display_time_ms, fsm_ultrasound_t *p_fsm_ultrasound_rear, fsm_display_t *p_fsm_display_rear,fsm_buzzer_t *p_fsm_buzzer_rear){

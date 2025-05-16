@@ -22,9 +22,9 @@
 /* Typedefs --------------------------------------------------------------------*/
 typedef struct
 {
-    GPIO_TypeDef * p_port_buzzer;
-	uint8_t pin_buzzer;
-	uint32_t pipi_counter;
+    GPIO_TypeDef * p_port_buzzer; //puerto del buzzer
+	uint8_t pin_buzzer; //pin del buzzer
+	uint32_t pipi_counter; //contador de semi-periodo
 } stm32f4_buzzer_hw_t;
 
 /* Global variables */
@@ -44,6 +44,10 @@ stm32f4_buzzer_hw_t *_stm32f4_buzzer_get(uint32_t buzzer_id){
     }
 }
 
+/**
+ * @brief Configura el timer del buzzer encargado de dictar la frecuencia del buzzer.
+ * @param buzzer_id ID del objeto buzzer.
+ */
 void _buzzer_timer_pwm_config (uint32_t buzzer_id){
 	if (buzzer_id == PORT_PARKING_BUZZER_ID){
 		//Habilitar contador TIM8
@@ -94,7 +98,12 @@ void _buzzer_timer_pwm_config (uint32_t buzzer_id){
 		TIM8 -> EGR = TIM_EGR_UG;
 	}
 }
-static void _timer_9_setup(uint32_t buzzer_id){
+
+/**
+ * @brief Configura el timer del buzzer encargado de dictar la el periodo de pulsación del buzzer.
+ * @param buzzer_id ID del objeto buzzer.
+ */
+static void _buzzer_timer_period_config(uint32_t buzzer_id){
 	if(buzzer_id == PORT_PARKING_BUZZER_ID){
 		//Habilitar contador TIM9
 		RCC->APB2ENR |= RCC_APB2ENR_TIM9EN;
@@ -131,6 +140,7 @@ static void _timer_9_setup(uint32_t buzzer_id){
 		NVIC_SetPriority(TIM1_BRK_TIM9_IRQn , NVIC_EncodePriority(NVIC_GetPriorityGrouping(),1,0));
 	}
 }
+
 void port_buzzer_set_freq (uint32_t buzzer_id, buzzer_t nota){
 	if (buzzer_id == PORT_PARKING_BUZZER_ID){
 		
@@ -195,24 +205,25 @@ void port_buzzer_set_freq (uint32_t buzzer_id, buzzer_t nota){
 /* Public functions -----------------------------------------------------------*/
 void port_buzzer_counter_add(uint32_t buzzer_id){
 	stm32f4_buzzer_hw_t *p_buzzer = _stm32f4_buzzer_get(buzzer_id);
-	p_buzzer->pipi_counter+=1;
-
+	p_buzzer->pipi_counter += 1;
 }
+
 void port_buzzer_counter_reset(uint32_t buzzer_id){
 	stm32f4_buzzer_hw_t *p_buzzer = _stm32f4_buzzer_get(buzzer_id);
 	TIM9 -> CR1 &= ~TIM_CR1_CEN;
-	TIM9->CNT = 0;
-	p_buzzer->pipi_counter=0;
+	TIM9 -> CNT = 0;
+	p_buzzer -> pipi_counter = 0;
 	TIM9 -> CR1 |= TIM_CR1_CEN;
 }
+
 uint32_t get_port_buzzer_counter(uint32_t buzzer_id){
 	stm32f4_buzzer_hw_t *p_buzzer = _stm32f4_buzzer_get(buzzer_id);
-	return p_buzzer->pipi_counter;
-
+	return p_buzzer -> pipi_counter;
 }
+
 void port_buzzer_init (uint32_t buzzer_id){
 	stm32f4_buzzer_hw_t *p_buzzer = _stm32f4_buzzer_get(buzzer_id);
-	p_buzzer->pipi_counter=0;
+	p_buzzer -> pipi_counter = 0;
 	stm32f4_system_gpio_config(
 		p_buzzer -> p_port_buzzer,
 		p_buzzer -> pin_buzzer,
@@ -227,7 +238,7 @@ void port_buzzer_init (uint32_t buzzer_id){
 	);
 
 	_buzzer_timer_pwm_config(buzzer_id);
-	_timer_9_setup(buzzer_id);
+	_buzzer_timer_period_config(buzzer_id);
 	
 	//Check if buzzer works
 	//port_buzzer_set_freq(buzzer_id,(buzzer_t){600,1});

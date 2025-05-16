@@ -23,6 +23,7 @@ struct  fsm_buzzer_t
 	bool 	new_nota;
 	bool 	status;
 	bool 	idle;
+	bool	pulsed;
 	uint32_t 	buzzer_id;
 	uint32_t 	counter;
 	uint32_t	max;
@@ -89,7 +90,7 @@ static bool check_buzzer_off_time(fsm_t *p_this){
 static bool check_buzzer_on_time (fsm_t *p_this){
 	fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);
 	p_fsm->counter = get_port_buzzer_counter(p_fsm->buzzer_id);
-	if ((p_fsm->max!=0)&&(p_fsm->counter>(p_fsm->max))){
+	if ((p_fsm->pulsed)&&(p_fsm->max!=0)&&(p_fsm->counter>(p_fsm->max))){
 		port_buzzer_counter_reset(p_fsm->buzzer_id);
 		//printf("OFF");
 		return true;
@@ -113,7 +114,12 @@ static void 	do_buzzer_set_nota (fsm_t *p_this){
 	p_fsm->new_nota = false;
 	p_fsm->idle = true;
 }
- 
+
+/**
+ * @brief Apagar el pulsador.
+ * 
+ * @param p_this objeto fsm de maquina de estados
+ */
 static void 	do_buzzer_set_off (fsm_t *p_this){
 	fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);
 	port_buzzer_set_freq(p_fsm->buzzer_id,BUZZER_OFF);
@@ -141,11 +147,12 @@ static void 	fsm_buzzer_init (fsm_buzzer_t *p_fsm_buzzer, uint32_t buzzer_id){
 	p_fsm_buzzer ->idle = false;
 	p_fsm_buzzer ->status = false;
 	p_fsm_buzzer ->new_nota = false;
+	p_fsm_buzzer ->pulsed = true;
 	p_fsm_buzzer ->max = 10;
 	p_fsm_buzzer ->counter = 0;
 	port_buzzer_init(buzzer_id);
 }
- 
+
 void 	fsm_buzzer_destroy (fsm_buzzer_t *p_fsm){
 	free(&p_fsm->f);
 }
@@ -171,7 +178,14 @@ void 	fsm_buzzer_set_distance (fsm_buzzer_t *p_fsm, uint32_t distance_cm){
 	p_fsm -> new_nota = true;
 }
 
- 
+void fsm_buzzer_pulsed_state(fsm_buzzer_t *p_fsm){
+	p_fsm -> pulsed = true;
+}
+
+void fsm_buzzer_continuous_state(fsm_buzzer_t *p_fsm){
+	p_fsm -> pulsed = false;
+}
+
 bool 	fsm_buzzer_get_status (fsm_buzzer_t *p_fsm){
 	return p_fsm->status;
 }
@@ -195,3 +209,4 @@ fsm_buzzer_t *fsm_buzzer_new(uint32_t buzzer_id)
     fsm_buzzer_init(p_fsm_buzzer, buzzer_id); /* Initialize the FSM */
     return p_fsm_buzzer;
 }
+

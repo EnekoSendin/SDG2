@@ -38,11 +38,38 @@ typedef struct
 } buzzer_t;
 
 /* Function prototypes and explanation -------------------------------------------------*/
+
+/**
+ * @brief Configura las especificaciones de hardware de un pulsador determinado. Inicializando tanto los timers como los valores del objeto buzzer.
+ * @param buzzer_id ID del objeto buzzer.
+ */
 void port_buzzer_init (uint32_t buzzer_id);
  
 //Configure the HW specifications of a given buzzer.
+
+/**
+ * @brief Función que modifica frecuencia de pulsador
+ * @param buzzer_id ID del objeto buzzer.
+ * @param buzzer objeto buzzer con una frecuencia y un tiempo de pulso.
+ */
 void port_buzzer_set_freq (uint32_t buzzer_id, buzzer_t buzzer);
+
+/**
+ * @brief Función que incrementa el contador de la estructura buzzer.
+ * @param buzzer_id ID del objeto buzzer.
+ */
 void port_buzzer_counter_add(uint32_t buzzer_id);
+
+/**
+ * @brief Función que reinicia el contador de la estructura buzzer.
+ * @param buzzer_id ID del objeto buzzer.
+ */
 void port_buzzer_counter_reset(uint32_t buzzer_id);
+
+/**
+ * @brief Función que devuelve el valor del contador de la estructura buzzer.
+ * @param buzzer_id ID del objeto buzzer.
+ * @return entero con el valor actual del contador del pulsador.
+ */
 uint32_t get_port_buzzer_counter(uint32_t buzzer_id);
 #endif /* PORT_BUZZER_SYSTEM_H_ */
