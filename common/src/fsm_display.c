@@ -29,6 +29,13 @@ struct  fsm_display_t
 /* Typedefs --------------------------------------------------------------------*/
 
 /* Private functions -----------------------------------------------------------*/
+
+/**
+ * @brief Calcula el color del display a partir de la distancia
+ *
+ * @param p_color Estructura del color rgb
+ * @param distance_cm Distancia en centimentros del ultrasound
+ */
 void 	_compute_display_levels (rgb_color_t *p_color, int32_t distance_cm){
 	if (distance_cm>= DANGER_MIN_CM && distance_cm<=WARNING_MIN_CM){
 		*p_color = COLOR_RED;
@@ -53,27 +60,56 @@ void 	_compute_display_levels (rgb_color_t *p_color, int32_t distance_cm){
 	*p_color = COLOR_OFF;
 }
 /* State machine input or transition functions */
+
+/**
+ * @brief Comprueba estado activo del display
+ *
+ * @param p_this Estructura de fsm del display
+ * @return devuelve estado de la fsm
+ */
 static bool check_active (fsm_t *p_this){
 	fsm_display_t *p_fsm = (fsm_display_t *)(p_this);
 	return p_fsm -> status;
 }
+
+/**
+ * @brief Comprueba si existe un nuevo color para el display
+ *
+ * @param p_this Estructura de fsm del display
+ * @return devuelve si existe un nuevo color en la fsm
+ */
 static bool check_set_new_color (fsm_t *p_this){
 	fsm_display_t *p_fsm = (fsm_display_t *)(p_this);
 	return p_fsm -> new_color;
 }
- 
+
+/**
+ * @brief Comprueba estado INactivo del display
+ *
+ * @param p_this Estructura de fsm del display
+ * @return devuelve estado de la fsm
+ */
 static bool check_off (fsm_t *p_this){
 	fsm_display_t *p_fsm = (fsm_display_t *)(p_this);
 	return !(p_fsm -> status);
 }
- 
 
 /* State machine output or action functions */
+/**
+ * @brief Inicializa a ningun color el display
+ *
+ * @param p_this Estructura de fsm del display
+ */
 static void 	do_set_on (fsm_t *p_this){
 	fsm_display_t *p_fsm = (fsm_display_t *)(p_this);
 	port_display_set_rgb(p_fsm->display_id,COLOR_OFF);
 }
- 
+
+/**
+ * @brief Calcula un nuevo color para el display rgb
+ *
+ * @param p_this Estructura de fsm del display
+ */
 static void 	do_set_color (fsm_t *p_this){
 	fsm_display_t *p_fsm = (fsm_display_t *)(p_this);
 	rgb_color_t color;
@@ -82,7 +118,12 @@ static void 	do_set_color (fsm_t *p_this){
 	p_fsm->new_color = false;
 	p_fsm->idle = true;
 }
- 
+
+/**
+ * @brief Apaga el display y pone a pausa la fsm
+ *
+ * @param p_this Estructura de fsm del display
+ */
 static void 	do_set_off (fsm_t *p_this){
 	fsm_display_t *p_fsm = (fsm_display_t *)(p_this);
 	port_display_set_rgb(p_fsm->display_id,COLOR_OFF);
