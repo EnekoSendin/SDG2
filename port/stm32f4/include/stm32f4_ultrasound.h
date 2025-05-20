@@ -3,7 +3,7 @@
  * @brief Header for stm32f4_ultrasound.c file.
  * @author Eneko Emilio Sendín Gallastegi
  * @author Rodrigo Gutierrez Fontán
- * @date 2025-03-18
+ * @date 2025-05-20
  */
 #ifndef STM32F4_ULTRASOUND_H_
 #define STM32F4_ULTRASOUND_H_
