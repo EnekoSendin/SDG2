@@ -33,6 +33,12 @@ struct  fsm_buzzer_t
 /* Typedefs --------------------------------------------------------------------*/
 
 /* Private functions -----------------------------------------------------------*/
+/**
+* @brief calcula la frecuencia a la que tiene que sonar el buzzer
+* @param p_nota nota que tiene que sonar
+* @param max tiempo que pasa encendido o apagado durante un sonido
+* @param distance_cm distancia de la nueva medicion
+*/
 void 	_compute_buzzer_levels (buzzer_t *p_nota,uint32_t *max, int32_t distance_cm){
 	if (distance_cm>= DANGER_MIN_CM && distance_cm<=WARNING_MIN_CM){
 		*p_nota = (buzzer_t){DO,1};
