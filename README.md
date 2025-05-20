@@ -21,9 +21,9 @@ NOTA: **NO** añada el código ```markdown``` en el fichero `README.md` de su pr
 
 Para añadir un enlace a un vídeo de Youtube, puede usar el siguiente código:
 
-```markdown
-[![Texto alternativo](docs/assets/imgs/imagen.png)](https://youtu.be/ID_DEL_VIDEO "Texto al pasar el ratón por encima de la imagen.")
-```
+
+[![Texto alternativo](docs/assets/imgs/FotoVideo.PNG)](https://youtu.be/iM3k7JMAz8s "Texto al pasar el ratón por encima de la imagen.")
+
 
 NOTA: **NO** añada el código ```markdown``` sino lo de dentro. Este código es un para mostrar de forma literal cómo se puede añadir un enlace a un vídeo de Youtube al fichero `README.md`.
 
@@ -199,3 +199,12 @@ Teoricamente la pulsación larga del botón indica el inicio de la marcha atrás
 # Version 5
 
 Breve descripción de la versión 5.
+
+| **Distancia (cm)**  | **Frecuencia del zumbador** | **Tiempo de pulso** | 
+| ------------------- | --------------------------- | ------------------- |
+| **\[0-25]**         | DO 261 | 100%     |
+| **\[25-50]**        | RE 293       | 37%      |
+| **\[50-150]**       | MI 329         | 0%       |
+| **\[150-175]**      | FA 349      | 10%      |
+| **\[175-200]**      | SOL 392           | 0%       |
+| **>200 o inválido** | Apagado        | 0%       |
