@@ -17,13 +17,13 @@
 
 /* Defines and enums ----------------------------------------------------------*/
 /* Defines */
-#define 	STM32F4_REAR_PARKING_SENSOR_TRIGGER_GPIO  GPIOB
+#define 	STM32F4_REAR_PARKING_SENSOR_TRIGGER_GPIO  GPIOB /*!< PUERTO del trigger*/
  
-#define 	STM32F4_REAR_PARKING_SENSOR_TRIGGER_PIN 0
+#define 	STM32F4_REAR_PARKING_SENSOR_TRIGGER_PIN 0 /*!< PIN del trigger*/
  
-#define 	STM32F4_REAR_PARKING_SENSOR_ECHO_GPIO GPIOA
+#define 	STM32F4_REAR_PARKING_SENSOR_ECHO_GPIO GPIOA /*!< PUERTO del echo*/
  
-#define 	STM32F4_REAR_PARKING_SENSOR_ECHO_PIN 1
+#define 	STM32F4_REAR_PARKING_SENSOR_ECHO_PIN 1 /*!< PIN del echo*/
 
 /* Function prototypes and explanation -------------------------------------------------*/
 /**
