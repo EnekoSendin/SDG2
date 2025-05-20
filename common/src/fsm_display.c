@@ -1,9 +1,9 @@
 /**
  * @file fsm_display.c
  * @brief Display system FSM main file.
- * @author alumno1
- * @author alumno2
- * @date fecha
+ * @author Eneko Emilio Sendin Gallastegi
+ * @author Rodrigo Gutierrez Fontan
+ * @date 2025-05-20
  */
 
 /* Includes ------------------------------------------------------------------*/
@@ -140,7 +140,11 @@ static fsm_trans_t 	fsm_trans_display [] = {
 };
 
 /* Public functions -----------------------------------------------------------*/
-
+/**
+* @brief inicializa el display
+* @param p_fsm_display estructura del display
+* @param display_id id del display
+*/
 static void 	fsm_display_init (fsm_display_t *p_fsm_display, uint32_t display_id){
 	fsm_init((fsm_t *)p_fsm_display,fsm_trans_display);
 	p_fsm_display ->display_id = display_id;
