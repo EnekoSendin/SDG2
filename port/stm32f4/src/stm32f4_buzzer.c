@@ -3,7 +3,7 @@
  * @brief Portable functions to interact with the buzzer system FSM library. All portable functions must be implemented in this file.
  * @author Eneko Emilio Sendín Gallastegi
  * @author Rodrigo Gutierrez Fontán
- * @date fecha
+ * @date 2025-05-20
  */
 
 /* Standard C includes */
@@ -20,6 +20,9 @@
 /* Defines --------------------------------------------------------------------*/
 
 /* Typedefs --------------------------------------------------------------------*/
+/**
+ * @brief La estructura tiene los siguientes parametros: el pin y puerto del buzzer y contador de semi-periodos de actividad.
+ */
 typedef struct
 {
     GPIO_TypeDef * p_port_buzzer; //puerto del buzzer
