@@ -1,9 +1,9 @@
 /**
  * @file fsm_ultrasound.c
  * @brief Ultrasound sensor FSM main file.
- * @author alumno1
- * @author alumno2
- * @date fecha
+ * @author Eneko Emilio Sendin Gallastegi
+ * @author Rodrigo Gutierrez Fontan
+ * @date 2025-05-20
  */
 
 /* Includes ------------------------------------------------------------------*/
@@ -20,6 +20,9 @@
 /* Project includes */
 
 /* Typedefs --------------------------------------------------------------------*/
+/**
+* @brief tiene una fsm_t, la distancia medida, el estado del ultrasonidos, si hay una nueva medicion o no, el id, el array de distancias medidas y el indice el array
+*/
 struct  	fsm_ultrasound_t
 {
 	fsm_t 	f;
@@ -33,6 +36,12 @@ struct  	fsm_ultrasound_t
 
 /* Private functions -----------------------------------------------------------*/
 // Comparison function for qsort
+/**
+* @brief hace la resta entre dos valores 
+* @param a valor al que se resta
+* @param b valor a restar
+* @return la resta de ambos valores
+*/
 int _compare(const void *a, const void *b){
     return (*(uint32_t *)a - *(uint32_t *)b);
 }
