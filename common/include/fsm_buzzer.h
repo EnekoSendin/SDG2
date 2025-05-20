@@ -33,6 +33,13 @@ enum  FSM_BUZZER_SYSTEM {
 /* Typedefs --------------------------------------------------------------------*/
 typedef struct fsm_buzzer_t fsm_buzzer_t;
 /* Function prototypes and explanation -------------------------------------------------*/
+/**
+ * @brief Crea un nuevo FSM buzzer
+ *
+ * @param display_id ID del buzzer a crear
+ * 
+ * @return devuelve la estructura fsm
+ */
 fsm_buzzer_t * 	fsm_buzzer_new (uint32_t buzzer_id);
  	//Create a new buzzer FSM. 
  
