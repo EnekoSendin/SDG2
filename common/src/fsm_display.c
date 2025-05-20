@@ -15,6 +15,11 @@
 #include "fsm.h"
 #include "fsm_display.h"
 /* HW dependent includes */
+
+/**
+* @brief Tiene un fsm_t, la distancia en centimetros guardada del display, un booleano que indica si hay un nuevo color disponible
+* un booleano que indica el estado del display, un booleano para indicar si esta en pausa el display y el ID del diaplay.
+*/
 struct  fsm_display_t
 {
 	fsm_t 	f;

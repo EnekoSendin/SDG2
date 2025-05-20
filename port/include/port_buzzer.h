@@ -3,7 +3,7 @@
  * @brief Header for the portable functions to interact with the HW of the BUZZER system. The functions must be implemented in the platform-specific code.
  * @author Eneko Emilio Sendín Gallastegi
  * @author Rodrigo Gutierrez Fontán
- * @date fecha
+ * @date 2025-05-20
  */
 #ifndef PORT_BUZZER_SYSTEM_H_
 #define PORT_BUZZER_SYSTEM_H_
@@ -15,12 +15,16 @@
 /* Enums */
 
 /* Defines ----------------------------------------------------------*/
+/** 
+ * @brief ID del buzzer
+*/
 #define PORT_PARKING_BUZZER_ID   0
 
 #define BUZZER_OFF (buzzer_t){0}
-//#define COLOR_BASIC (buzzer_t){400}
 
-// NOTAS en Hz
+/**
+ * @brief frecuencia en Hz de notas musicales
+ */
 #define DO 261
 #define RE 293
 #define MI 329
@@ -31,6 +35,10 @@
 #define DO_ALTO 523
 
 /* Typedefs --------------------------------------------------------------------*/
+/**
+ * @brief Esta estructura del buzzer con atributo de la frecuencia del reloj de PWM
+ * @note inicialmente tenia un parametro time para medir el tiempo en activo
+ */
 typedef struct
 {
 	uint32_t freq; //frecuencia de la nota en Hz
