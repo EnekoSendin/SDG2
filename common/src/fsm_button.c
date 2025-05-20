@@ -16,6 +16,9 @@
 /* Project includes */
 #include "fsm_button.h"
 
+/**
+* @brief Tiene un fsm_t, un tiempo de rebote del boton, cuando es el proximo timeout, el numero de ticks pulsado, la duracion y el id del boton
+*/
 struct  fsm_button_t
 {
 	fsm_t 	f;
