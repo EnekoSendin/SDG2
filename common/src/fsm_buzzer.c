@@ -3,7 +3,7 @@
  * @brief Buzzer system FSM main file.
  * @author Eneko Emilio Sendín Gallastegi
  * @author Rodrigo Gutierrez Fontán
- * @date fecha
+ * @date 2025-05-20
  */
 
 /* Includes ------------------------------------------------------------------*/
@@ -16,6 +16,9 @@
 #include "fsm_buzzer.h"
 
 /* HW dependent includes */
+/**
+* @brief Tiene una fsm_t, la distancia y la nota que suena a esa distancia, el estado, idle (si esta pausado o no), si esta pulsado o no, el id del buzzer, un contador y el tiempo de sonido
+*/
 struct  fsm_buzzer_t
 {
 	fsm_t 	f;
@@ -68,6 +71,10 @@ void 	_compute_buzzer_levels (buzzer_t *p_nota,uint32_t *max, int32_t distance_c
 	*p_nota = BUZZER_OFF;
 }
 /* State machine input or transition functions */
+/**
+* @brief comprueba que el buzzer esta activo
+* @param p_this fsm_t del buzzer
+* @return estado 
 static bool check_buzzer_active (fsm_t *p_this){
 	fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);
 	return p_fsm -> status;
