@@ -44,27 +44,27 @@ struct  fsm_buzzer_t
 */
 void 	_compute_buzzer_levels (buzzer_t *p_nota,uint32_t *max, int32_t distance_cm){
 	if (distance_cm>= DANGER_MIN_CM && distance_cm<=WARNING_MIN_CM){
-		*p_nota = (buzzer_t){DO,1};
+		*p_nota = (buzzer_t){DO};
 		*max = 0;
 		return;
 	}
 	if (distance_cm> WARNING_MIN_CM && distance_cm<=NO_PROBLEM_MIN_CM){
-		*p_nota = (buzzer_t){RE,1};
+		*p_nota = (buzzer_t){RE};
 		*max = 5;
 		return;
 	}
 	if (distance_cm> NO_PROBLEM_MIN_CM && distance_cm<=INFO_MIN_CM){
-		*p_nota = (buzzer_t){MI,1};
+		*p_nota = (buzzer_t){MI};
 		*max = 10;
 		return;
 	}
 	if (distance_cm> INFO_MIN_CM && distance_cm<=OK_MIN_CM){
-		*p_nota = (buzzer_t){FA,1};
+		*p_nota = (buzzer_t){FA};
 		*max = 15;
 		return;
 	}
 	if (distance_cm> OK_MIN_CM && distance_cm<=OK_MAX_CM){
-		*p_nota = (buzzer_t){SOL,1};
+		*p_nota = (buzzer_t){SOL};
 		*max = 20;
 		return;
 	}

@@ -17,8 +17,8 @@
 /* Defines ----------------------------------------------------------*/
 #define PORT_PARKING_BUZZER_ID   0
 
-#define BUZZER_OFF (buzzer_t){0, 0}
-//#define COLOR_BASIC (buzzer_t){400,5000}
+#define BUZZER_OFF (buzzer_t){0}
+//#define COLOR_BASIC (buzzer_t){400}
 
 // NOTAS en Hz
 #define DO 261
@@ -34,7 +34,6 @@
 typedef struct
 {
 	uint32_t freq; //frecuencia de la nota en Hz
-	uint32_t time; //tiempo de duracion de nota en ms
 } buzzer_t;
 
 /* Function prototypes and explanation -------------------------------------------------*/
