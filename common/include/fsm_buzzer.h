@@ -17,12 +17,18 @@
 
 /* Defines and enums ----------------------------------------------------------*/
 /* Enums */
+/**
+* @brief estados de la maquina de estados
+*/
 enum  FSM_BUZZER_SYSTEM {
   QUIETO_PARAO_BUZZER = 0,
   PIPIPIPI_BUZZER,
   CALLAITO_BUZZER
 };
 /* Defines  ----------------------------------------------------------*/
+/**
+* @brief distancias a la que cambia la maquina de estados
+*/
 #define DANGER_MIN_CM 0
 #define WARNING_MIN_CM 25
 #define NO_PROBLEM_MIN_CM 50
