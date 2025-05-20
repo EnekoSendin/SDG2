@@ -48,13 +48,28 @@
  typedef struct fsm_urbanite_t 	fsm_urbanite_t;
 
 /* Function prototypes and explanation -------------------------------------------------*/
-
+/**
+* @brief crea un nuevo fsm urbanite
+* @param p_fsm_button fsm del boton
+* @param on_off_press_time_ms tiempo de pulsacion para apagar o encender
+* @param pause_display_time_ms tiempo de pulsacion para parar las medidas
+* @param p_fsm_ultrasound_rear fsm del ultrasonidos
+* @param p_fsm_display_rear fsm del display
+* @param p_fsm_buzzer_rear fsm del buzzer
+* @return fsm urbanite
+*/
 fsm_urbanite_t * 	fsm_urbanite_new (fsm_button_t *p_fsm_button, uint32_t on_off_press_time_ms, uint32_t pause_display_time_ms, fsm_ultrasound_t *p_fsm_ultrasound_rear, fsm_display_t *p_fsm_display_rear, fsm_buzzer_t *p_fsm_buzzer_rear);
  	//Create a new Urbanite FSM.
- 
+/**
+* @brief dispara el fsm del urbanite
+* @param p_fsm fsm urbanite
+*/
 void 	fsm_urbanite_fire (fsm_urbanite_t *p_fsm);
  	//Fire the Urbanite FSM.
- 
+ /**
+* @brief destruye el fsm del urbanite
+* @param p_fsm fsm urbanite
+*/
 void 	fsm_urbanite_destroy (fsm_urbanite_t *p_fsm);
  	//Destroy an Urbanite FSM.
 
