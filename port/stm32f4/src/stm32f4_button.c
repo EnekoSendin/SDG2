@@ -21,6 +21,10 @@
 
 
 /* Typedefs --------------------------------------------------------------------*/
+/**
+ * @brief La estructura del boton tienen los siguientes elementos: el puerto y pin del boton, el modo de pull-up/pull-down y un booleano para saber si el boton está presionado
+ *
+ */
 typedef struct
 {
     GPIO_TypeDef *p_port;
