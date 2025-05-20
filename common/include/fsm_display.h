@@ -1,9 +1,9 @@
 /**
  * @file fsm_display.h
  * @brief Header for fsm_display.c file.
- * @author alumno1
- * @author alumno2
- * @date fecha
+ * @author Eneko Emilio Sendín Gallastegi
+ * @author Rodrigo Gutiérrez Fontán
+ * @date 2025-05-20
  */
 
 #ifndef FSM_DISPLAY_SYSTEM_H_
@@ -17,11 +17,17 @@
 
 /* Defines and enums ----------------------------------------------------------*/
 /* Enums */
+/**
+* @brief estados de la máquina de estados
+*/
 enum  FSM_DISPLAY_SYSTEM {
   WAIT_DISPLAY = 0,
   SET_DISPLAY
 };
 /* Defines  ----------------------------------------------------------*/
+/**
+* @brief distancia a las que cambia la máquina de estados
+*/
 #define DANGER_MIN_CM 0
 #define WARNING_MIN_CM 25
 #define NO_PROBLEM_MIN_CM 50
