@@ -3,7 +3,7 @@
  * @brief Portable functions to interact with the ultrasound FSM library. All portable functions must be implemented in this file.
  * @author Eneko Emilio Sendín Gallastegi
  * @author Rodrigo Gutierrez Fontán
- * @date 2025-03-18
+ * @date 2025-05-20
  */
 
 /* Standard C includes */
@@ -18,6 +18,12 @@
 /* Microcontroller dependent includes */
 
 /* Typedefs --------------------------------------------------------------------*/
+/**
+ * @brief Esta estructura tiene: El puerto y pin de la patilla echo y el trigger, la funcion alternativa del echo, parametro trigger_ready y trigger_end que indican en el estado del trigger
+ * y parametros echo_init_tick,echo_end_tick,echo_overflows que se encargan de guardar el tiempo del pulso recivido por el echo, comienzo, final y cuantas veces se ha llegado hasta el 
+ * máximo del registro.
+ * 
+ */
 typedef struct{
 	GPIO_TypeDef * 	p_trigger_port;
 	GPIO_TypeDef * 	p_echo_port;
