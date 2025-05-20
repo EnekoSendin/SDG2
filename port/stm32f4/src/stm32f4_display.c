@@ -1,9 +1,9 @@
 /**
  * @file stm32f4_display.c
  * @brief Portable functions to interact with the display system FSM library. All portable functions must be implemented in this file.
- * @author alumno1
- * @author alumno2
- * @date fecha
+ * @author Eneko Emilio Sendín Gallastegi
+ * @author Rodrigo Gutiérrez Fontán
+ * @date 2025-05-20
  */
 
 /* Standard C includes */
@@ -20,6 +20,9 @@
 /* Defines --------------------------------------------------------------------*/
 
 /* Typedefs --------------------------------------------------------------------*/
+/**
+ * @brief Esta estructura tiene los siguientes elementos: el puerto y pin del display de cada uno de los colores rojo, verde y azul
+ */
 typedef struct
 {
     GPIO_TypeDef * p_port_red;
@@ -51,6 +54,10 @@ stm32f4_display_hw_t *_stm32f4_display_get(uint32_t display_id){
     }
 }
 
+/**
+ * @brief Configuración del timer que se encarga del PWM de los colores
+ * @param display_id el ID del display
+ */
 void _timer_pwm_config (uint32_t display_id){
 	if (display_id == PORT_REAR_PARKING_DISPLAY_ID){
 		RCC -> APB1ENR |= RCC_APB1ENR_TIM4EN;
