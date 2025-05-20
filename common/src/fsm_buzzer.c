@@ -75,20 +75,34 @@ void 	_compute_buzzer_levels (buzzer_t *p_nota,uint32_t *max, int32_t distance_c
 * @brief comprueba que el buzzer esta activo
 * @param p_this fsm_t del buzzer
 * @return estado 
+*/
 static bool check_buzzer_active (fsm_t *p_this){
 	fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);
 	return p_fsm -> status;
 }
+/**
+* @brief comprueba que el buzzer tiene una nota nueva
+* @param p_this fsm_t del buzzer
+* @return si hay nueva nota o no 
+*/
 static bool check_buzzer_set_new_nota (fsm_t *p_this){
 	fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);
 	return p_fsm -> new_nota;
 }
- 
+ /**
+* @brief comprueba que el buzzer esta apagado
+* @param p_this fsm_t del buzzer
+* @return si esta apagado o no 
+*/
 static bool check_buzzer_off (fsm_t *p_this){
 	fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);
 	return !(p_fsm -> status);
 }
-
+/**
+* @brief comprueba que el buzzer ha esperado suficiente tiempo para volver a sonar
+* @param p_this fsm_t del buzzer
+* @return si ha llegado al tiempo suficiente 
+*/
 static bool check_buzzer_off_time(fsm_t *p_this){
 	fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);
 	p_fsm->counter = get_port_buzzer_counter(p_fsm->buzzer_id);
@@ -99,7 +113,11 @@ static bool check_buzzer_off_time(fsm_t *p_this){
 	}
 	return false;
 }
-
+/**
+* @brief comprueba que el buzzer ha sonado suficiente tiempo para volver a callarse
+* @param p_this fsm_t del buzzer
+* @return si ha llegado al tiempo suficiente  
+*/
 static bool check_buzzer_on_time (fsm_t *p_this){
 	fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);
 	p_fsm->counter = get_port_buzzer_counter(p_fsm->buzzer_id);
@@ -112,11 +130,18 @@ static bool check_buzzer_on_time (fsm_t *p_this){
 }
 
 /* State machine output or action functions */
+/**
+* @brief hace que el buzzer se encienda
+* @param p_this fsm_t del buzzer
+*/
 static void 	do_buzzer_set_on (fsm_t *p_this){
 	fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);
 	port_buzzer_set_freq(p_fsm->buzzer_id,BUZZER_OFF);
 }
- 
+ /**
+* @brief hace que el buzzer tenga una nueva nota
+* @param p_this fsm_t del buzzer
+*/
 static void 	do_buzzer_set_nota (fsm_t *p_this){
 	fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);
 	buzzer_t nota;
@@ -141,6 +166,9 @@ static void 	do_buzzer_set_off (fsm_t *p_this){
 
 
 /* Other auxiliary functions */
+/**
+* @brief tabla de transiciones de la maquina de estados
+*/
 static fsm_trans_t 	fsm_trans_buzzer [] = {
 	{QUIETO_PARAO_BUZZER,check_buzzer_active,PIPIPIPI_BUZZER,do_buzzer_set_on},
 	{PIPIPIPI_BUZZER,check_buzzer_on_time,CALLAITO_BUZZER,do_buzzer_set_on},
@@ -152,7 +180,11 @@ static fsm_trans_t 	fsm_trans_buzzer [] = {
 };
 
 /* Public functions -----------------------------------------------------------*/
-
+/**
+* @brief inicializa el buzzer
+* @param p_fsm_buzzer estructura del buzzer
+* @param buzzer_id id del buzzer
+*/
 static void 	fsm_buzzer_init (fsm_buzzer_t *p_fsm_buzzer, uint32_t buzzer_id){
 	fsm_init((fsm_t *)p_fsm_buzzer,fsm_trans_buzzer);
 	p_fsm_buzzer ->buzzer_id = buzzer_id;
