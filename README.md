@@ -203,11 +203,11 @@ Breve descripción de la versión 5.
 
 | **Distancia (cm)**  | **Frecuencia del zumbador** | **Tiempo de pulso (en unidades de 25ms)** | 
 | ------------------- | --------------------------- | ------------------- |
-| **\[0-25]**         | *DO* 261 Hz  | Continuo     |
-| **\[25-50]**        | *RE* 293 Hz  | 5      |
-| **\[50-150]**       | *MI* 329 Hz  | 10       |
-| **\[150-175]**      | *FA* 349 Hz  | 15      |
-| **\[175-200]**      | *SOL* 392 Hz  | 20       |
+| **\[0-25]**         | \[*DO*] 261 Hz  | Continuo     |
+| **\[25-50]**        | \[*RE*] 293 Hz  | 5      |
+| **\[50-150]**       | \[*MI*] 329 Hz  | 10       |
+| **\[150-175]**      | \[*FA*] 349 Hz  | 15      |
+| **\[175-200]**      | \[*SOL*] 392 Hz  | 20       |
 | **>200 o inválido** | Apagado  | No hay       |
 
 | **Parámetro**              | **Valor**                                                      |
@@ -221,10 +221,10 @@ Breve descripción de la versión 5.
 | **Prescaler**              | A calcular para una frecuencia Variable                   |
 | **Período**                | A calcular para una frecuencia Variable                    |
 | **Ciclo de trabajo**       | 50%                     |
+
+| **Parámetro**              | **Valor**                                                      |
 | ---------------------- | ---------------------------------------------------------- |
 | **Timer de semi-periodos** | TIM9                             |
 | **Prescaler**              | A calcular para un periodo de 25ms  (*15999*) ;         |
 | **Período**                | A calcular para un periodo de 25ms (*24*)               |
-| **Canal LED verde**        | Funcion Alternativa 2 y Canal 3                            |
-| **Canal LED azul**         | Funcion Alternativa 2 y Canal 4                            |
 
