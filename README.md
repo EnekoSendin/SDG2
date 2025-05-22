@@ -54,7 +54,7 @@ En la **Versión 1**, el sistema funciona solo con el **botón de usuario**.
 
 ## FSM del button
 
-[![Texto alternativo](docs/assets/imgs/FSM_1.PNG)]
+![Texto alternativo](docs/assets/imgs/FSM_1.PNG)
 
 ---
 
@@ -141,7 +141,7 @@ El sistema emplea **tres temporizadores**:
 
 ## FSM del ultrasound
 
-[![Texto alternativo](docs/assets/imgs/FSM_2.PNG)]
+![Texto alternativo](docs/assets/imgs/FSM_2.PNG)
 
 ---
 
@@ -186,7 +186,7 @@ La siguiente tabla define los **valores del ciclo de trabajo** según la distanc
 
 ## FSM del display
 
-[![Texto alternativo](docs/assets/imgs/FSM_3.PNG)]
+![Texto alternativo](docs/assets/imgs/FSM_3.PNG)
 
 ---
 
@@ -219,7 +219,7 @@ Teoricamente la pulsación larga del botón indica el inicio de la marcha atrás
 
 ## FSM del urbanite
 
-[![Texto alternativo](docs/assets/imgs/FSM_4.PNG)]
+![Texto alternativo](docs/assets/imgs/FSM_4.PNG)
 
 ---
 
