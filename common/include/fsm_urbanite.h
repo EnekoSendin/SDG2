@@ -1,5 +1,5 @@
 /**
- * @file fsm_ultrasound.h
+ * @file fsm_urbanite.h
  * @brief
  * @author Rodrigo Gutierrez
  * @author Eneko Emilio Sendin

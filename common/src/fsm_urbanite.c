@@ -1,5 +1,5 @@
 /**
- * @file fsm_ultrasound.c
+ * @file fsm_urbanite.c
  * @brief Ultrasound sensor FSM main file.
  * @author Eneko Emilio Sendin Gallastegi
  * @author Rodrigo Gutierrez Fontan
