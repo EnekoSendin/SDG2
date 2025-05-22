@@ -5,7 +5,13 @@
 * **Eneko Emilio Sendin** - email: [enekoemilio.sendin@alumnos.upm.es](mailto:enekoemilio.sendin@alumnos.upm.es)
 * **Rodrigo Gutierrez** - email: [rodrigo.gutierrez@alumnos.upm.es](mailto:rodrigo.gutierrez@alumnos.upm.es)
 
-Ponga una breve descripción del proyecto **Sensor de Aparcamiento de Coche** en castellano e inglés.
+## Descripción
+
+En este proyecto realizaremos un sensor de aparcamiento de un coche. Implementaremos un sensor de infrarojos
+para medir distancia, un display con un led para indicar a qué distancia se encuentra el coche, y un sistema 
+de ahorro de bateria. Adicionalmente, implementaremos un zumbador (buzzer) que pulse a distintas frecuencias
+y con distintos tiempos de encendido y apagado. Finalmente existirá una manera de cambiar el modo de pulsación 
+del buzzer para obtener un pitido discreto o continuo.
 
 ## Video explicativo
 [![Texto alternativo](docs/assets/imgs/FotoVideo.PNG)](https://youtu.be/iM3k7JMAz8s "Enlace a video explicativo de V5.")
