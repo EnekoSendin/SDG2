@@ -267,4 +267,4 @@ Para el tiempo de pulso utilizaremos un reloj (TIM9) que interrumpa cada 25ms, d
 
 ![Texto alternativo](docs/assets/imgs/FSM_5.PNG)
 
-Los estados QUIETO PARAO (estado de ahorro de batería), PIPIPIPI (suena) y CALLAITO (está en estado de sonar pero se calla un tiempo corto). Existe un parámetro que impide que pase de PIPIPIPI a CALLAITO, de manera que si se pulsa el botón, en lugar de sonar de manera intercalado, solamente suena de contínuo. De esta forma, cuando el sistema se enciende, suena intercalado; si se pulsa el botón, suena de contínua; si se vuelve a pulsar, pasa a ahorro de batería; y si se vuelve a pulsar, vuelve a sonar intercalado.
+Los estados son QUIETO PARAO (estado de ahorro de batería), PIPIPIPI (suena) y CALLAITO (está en estado de sonar pero se calla un tiempo corto). Existe un parámetro que impide que pase de PIPIPIPI a CALLAITO, de manera que si se pulsa el botón, en lugar de sonar de manera intercalado, solamente suena de contínuo. De esta forma, cuando el sistema se enciende, suena intercalado; si se pulsa el botón, suena de contínua; si se vuelve a pulsar, pasa a ahorro de batería; y si se vuelve a pulsar, vuelve a sonar intercalado.
