@@ -14,17 +14,17 @@ y con distintos tiempos de encendido y apagado. Finalmente existirá una manera 
 del buzzer para obtener un pitido discreto o continuo.
 
 ## Video explicativo
-[![Texto alternativo](docs/assets/imgs/FotoVideo.PNG)](https://youtu.be/iM3k7JMAz8s "Enlace a video explicativo de V5.")
+[![Video Youtube](docs/assets/imgs/FotoVideo.PNG)](https://youtu.be/iM3k7JMAz8s "Enlace a video explicativo de V5.")
 
 Enlace al vídeo explicativo del funcionamiento de la V5 (hacer click en la foto).
 
 ## Osciloscopio
-![Texto alternativo](docs/assets/imgs/Osciloscopio.PNG)
+![Foto de osciloscopio](docs/assets/imgs/Osciloscopio.PNG)
 
 Medida en el osciloscopio de la subida del pulso enviado y el pulso recibido, apreciándose la diferencia de tiempo.
 
 ## Montaje para la V5
-![Texto alternativo](docs/assets/imgs/Montaje.PNG)
+![Montaje V5](docs/assets/imgs/Montaje.PNG)
 
 Al montaje de la V4, se le añade un zumbador con una resistencia de 100Ω en serie.
 
@@ -55,7 +55,7 @@ En la **Versión 1**, el sistema funciona solo con el **botón de usuario**.
 
 ## FSM del button
 
-![Texto alternativo](docs/assets/imgs/FSM_1.PNG)
+![FSM Button](docs/assets/imgs/FSM_1.PNG)
 
 ---
 
@@ -142,7 +142,7 @@ El sistema emplea **tres temporizadores**:
 
 ## FSM del ultrasound
 
-![Texto alternativo](docs/assets/imgs/FSM_2.PNG)
+![FSM del ultrasound](docs/assets/imgs/FSM_2.PNG)
 
 ---
 
@@ -187,7 +187,7 @@ La siguiente tabla define los **valores del ciclo de trabajo** según la distanc
 
 ## FSM del display
 
-![Texto alternativo](docs/assets/imgs/FSM_3.PNG)
+![FSM display](docs/assets/imgs/FSM_3.PNG)
 
 ---
 
@@ -220,7 +220,7 @@ Teoricamente la pulsación larga del botón indica el inicio de la marcha atrás
 
 ## FSM del urbanite
 
-![Texto alternativo](docs/assets/imgs/FSM_4.PNG)
+![FSM Urbanite](docs/assets/imgs/FSM_4.PNG)
 
 ---
 
@@ -265,6 +265,6 @@ Para el tiempo de pulso utilizaremos un reloj (TIM9) que interrumpa cada 25ms, d
 
 ## FSM del buzzer
 
-![Texto alternativo](docs/assets/imgs/FSM_5.PNG)
+![FSM del buzzer](docs/assets/imgs/FSM_5.PNG)
 
 Los estados son QUIETO PARAO (estado de ahorro de batería), PIPIPIPI (suena) y CALLAITO (está en estado de sonar pero se calla un tiempo corto). Existe un parámetro que impide que pase de PIPIPIPI a CALLAITO, de manera que si se pulsa el botón, en lugar de sonar de manera intercalado, solamente suena de contínuo. De esta forma, cuando el sistema se enciende, suena intercalado; si se pulsa el botón, suena de contínua; si se vuelve a pulsar, pasa a ahorro de batería; y si se vuelve a pulsar, vuelve a sonar intercalado.
