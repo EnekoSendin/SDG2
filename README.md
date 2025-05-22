@@ -52,6 +52,12 @@ En la **Versión 1**, el sistema funciona solo con el **botón de usuario**.
 
 ---
 
+## FSM del button
+
+[![Texto alternativo](docs/assets/imgs/FSM_1.PNG)]
+
+---
+
 # Versión 2
 
 ## Descripción
@@ -131,6 +137,14 @@ El sistema emplea **tres temporizadores**:
 | **Prioridad** | 5 |
 | **Subprioridad** | 0 |
 
+---
+
+## FSM del ultrasound
+
+[![Texto alternativo](docs/assets/imgs/FSM_2.PNG)]
+
+---
+
 # Version 3
 
 En la Versión 3, el sistema incluye una pantalla utilizando un LED RGB. El LED RGB está conectado a los pines PB6 (rojo), PB8 (verde) y PB9 (azul). El sistema utiliza el temporizador TIM4 para controlar la frecuencia de la señal PWM para cada color. Esta configuración permite que el LED RGB indique visualmente la distancia a un objeto.
@@ -168,6 +182,13 @@ La siguiente tabla define los **valores del ciclo de trabajo** según la distanc
 | **\[175-200]**      | Azul           | 0%       | 0%        | 100%     |
 | **>200 o inválido** | Apagado        | 0%       | 0%        | 0%       |
 
+---
+
+## FSM del display
+
+[![Texto alternativo](docs/assets/imgs/FSM_3.PNG)]
+
+---
 
 # Version 4
 
@@ -196,10 +217,15 @@ Teoricamente la pulsación larga del botón indica el inicio de la marcha atrás
 
 ---
 
+## FSM del urbanite
+
+[![Texto alternativo](docs/assets/imgs/FSM_4.PNG)]
+
+---
+
 # Version 5
 
-Breve descripción de la versión 5.
-
+En la version 5 implementamos un zumbador que cambia en cuanto frecuencia del pulso y tiempo de encendido y apagado. Los valores arbitrarios que hemos decidido elegir para el buzzer son los siguientes:
 
 | **Distancia (cm)**  | **Frecuencia del zumbador** | **Tiempo de pulso (en unidades de 25ms)** | 
 | ------------------- | --------------------------- | ------------------- |
@@ -210,21 +236,25 @@ Breve descripción de la versión 5.
 | **\[175-200]**      | \[*SOL*] 392 Hz  | 20       |
 | **>200 o inválido** | Apagado  | No hay       |
 
-| **Parámetro**              | **Valor**                                                      |
-| ---------------------- | ---------------------------------------------------------- |
-| **Pin Buzzer (PWM)**           | PC7                                             |
-| **Canal LED buzzer**          | Función Alternativa 3 y Canal 2                      |
-| **Modo**                   | Alternativo                                                |
-| **Pull up/down**           | Sin resistencia pull                                       |
-| **Temporizador**           | TIM8                                                       |
-| **Modo PWM**               | Modo PWM 1                                                 |
-| **Prescaler**              | A calcular para una frecuencia Variable                   |
-| **Período**                | A calcular para una frecuencia Variable                    |
-| **Ciclo de trabajo**       | 50%                     |
+Para la configuración de frecuencia del buzzer hemos utilizado el timer especial 8 (TIM8) en modo PW1 para configurar la frecuencia. Además, este es el timer se encarga de alimentar el buzzer. Estos serán los parametros a considerar en este timer:
 
-| **Parámetro**              | **Valor**                                                      |
-| ---------------------- | ---------------------------------------------------------- |
-| **Timer de semi-periodos** | TIM9                             |
+| **Parámetro**              | **Valor**                                       |
+| -------------------------- | ----------------------------------------------- |
+| **Pin Buzzer (PWM)**       | PC7                                             |
+| **Canal LED buzzer**       | Función Alternativa 3 y Canal 2                 |
+| **Modo**                   | Alternativo                                     |
+| **Pull up/down**           | Sin resistencia pull                            |
+| **Temporizador**           | TIM8                                            |
+| **Modo PWM**               | Modo PWM 1                                      |
+| **Prescaler**              | A calcular para una frecuencia Variable         |
+| **Período**                | A calcular para una frecuencia Variable         |
+| **Ciclo de trabajo**       | 50%                                             |
+
+Para el tiempo de pulso utilizaremos un reloj (TIM9) que interrumpa cada 25ms, de esta manera, contaremos el número de veces que interrumpe el timer para activar o desativar el buzzer. Estos son los parámetros del TIM9:
+
+| **Parámetro**              | **Valor**                                               |
+| -------------------------- | ------------------------------------------------------- |
+| **Timer de semi-periodos** | TIM9                                                    |
 | **Prescaler**              | A calcular para un periodo de 25ms  (*15999*) ;         |
 | **Período**                | A calcular para un periodo de 25ms (*24*)               |
 
