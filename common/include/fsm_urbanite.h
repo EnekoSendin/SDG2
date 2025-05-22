@@ -1,6 +1,6 @@
 /**
  * @file fsm_urbanite.h
- * @brief
+ * @brief Header for fsm_urbanite.c file.
  * @author Rodrigo Gutierrez
  * @author Eneko Emilio Sendin
  * @date 2025-03-18
