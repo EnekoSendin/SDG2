@@ -236,6 +236,8 @@ En la version 5 implementamos un zumbador que cambia en cuanto frecuencia del pu
 | **\[175-200]**      | \[*SOL*] 392 Hz  | 20       |
 | **>200 o inválido** | Apagado  | No hay       |
 
+## Timer de Frecuencia
+
 Para la configuración de frecuencia del buzzer hemos utilizado el timer especial 8 (TIM8) en modo PW1 para configurar la frecuencia. Además, este es el timer se encarga de alimentar el buzzer. Estos serán los parametros a considerar en este timer:
 
 | **Parámetro**              | **Valor**                                       |
@@ -250,6 +252,8 @@ Para la configuración de frecuencia del buzzer hemos utilizado el timer especia
 | **Período**                | A calcular para una frecuencia Variable         |
 | **Ciclo de trabajo**       | 50%                                             |
 
+## Timer Pulsado
+
 Para el tiempo de pulso utilizaremos un reloj (TIM9) que interrumpa cada 25ms, de esta manera, contaremos el número de veces que interrumpe el timer para activar o desativar el buzzer. Estos son los parámetros del TIM9:
 
 | **Parámetro**              | **Valor**                                               |
@@ -258,3 +262,6 @@ Para el tiempo de pulso utilizaremos un reloj (TIM9) que interrumpa cada 25ms, d
 | **Prescaler**              | A calcular para un periodo de 25ms  (*15999*) ;         |
 | **Período**                | A calcular para un periodo de 25ms (*24*)               |
 
+## FSM del buzzer
+
+![Texto alternativo](docs/assets/imgs/FSM_5.PNG)
