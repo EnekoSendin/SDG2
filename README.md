@@ -7,20 +7,6 @@
 
 Ponga una breve descripción del proyecto **Sensor de Aparcamiento de Coche** en castellano e inglés.
 
-Puede añadir una imagen de portada **de su propiedad** aquí. Por ejemplo, del montaje final, o una captura de osciloscopio, etc.
-
-**Las imágenes se deben guardar en la carpeta `docs/assets/imgs/` y se pueden incluir en el documento de la siguiente manera:**
-
-```markdown
-![Texto alternativo](docs/assets/imgs/imagen.png)
-```
-
-NOTA: **NO** añada el código ```markdown``` en el fichero `README.md` de su proyecto, sino lo de dentro. Este código es un para mostrar de forma literal cómo se puede añadir una imagen al fichero `README.md`.
-
-**Añada un enlace a un vídeo público de su propiedad aquí con la demostración del proyecto explicando lo que haya hecho en la versión V5.**
-
-Para añadir un enlace a un vídeo de Youtube, puede usar el siguiente código:
-
 ## Video explicativo
 [![Texto alternativo](docs/assets/imgs/FotoVideo.PNG)](https://youtu.be/iM3k7JMAz8s "Enlace a video explicativo de V5.")
 
@@ -30,7 +16,6 @@ Para añadir un enlace a un vídeo de Youtube, puede usar el siguiente código:
 ## Montaje para la V5
 ![Texto alternativo](docs/assets/imgs/Montaje.PNG)
 
-NOTA: **NO** añada el código ```markdown``` sino lo de dentro. Este código es un para mostrar de forma literal cómo se puede añadir un enlace a un vídeo de Youtube al fichero `README.md`.
 
 # Version 1
 
