@@ -21,13 +21,13 @@ NOTA: **NO** añada el código ```markdown``` en el fichero `README.md` de su pr
 
 Para añadir un enlace a un vídeo de Youtube, puede usar el siguiente código:
 
-### Video explicativo
+## Video explicativo
 [![Texto alternativo](docs/assets/imgs/FotoVideo.PNG)](https://youtu.be/iM3k7JMAz8s "Enlace a video explicativo de V5.")
 
-### Osciloscopio
+## Osciloscopio
 ![Texto alternativo](docs/assets/imgs/Osciloscopio.PNG)
 
-### Montaje para la V5
+## Montaje para la V5
 ![Texto alternativo](docs/assets/imgs/Montaje.PNG)
 
 NOTA: **NO** añada el código ```markdown``` sino lo de dentro. Este código es un para mostrar de forma literal cómo se puede añadir un enlace a un vídeo de Youtube al fichero `README.md`.
