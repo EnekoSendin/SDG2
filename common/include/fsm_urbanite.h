@@ -15,29 +15,10 @@
 #include <stdint.h>
 #include "fsm_button.h"
 #include "fsm_display.h"
-#include "fsm_buzzer.h"
 #include "fsm_ultrasound.h"
 
 /* Defines and enums ----------------------------------------------------------*/
-/**
-* @brief número de estados de funcionamiento
-*/
-#define NUM_STATES 3
 
-/**
-* @brief estado pausado
-*/
-#define STATE_PAUSED 0
-
-/**
-* @brief estado de pulso discreto
-*/
-#define STATE_PULSED 1
-
-/**
-* @brief estado de pulso continuo
-*/
-#define STATE_CONTINUOUS 2
 
 /**
  * @brief Estados de la maquina de estados
@@ -67,10 +48,9 @@
 * @param pause_display_time_ms tiempo de pulsacion para parar las medidas
 * @param p_fsm_ultrasound_rear fsm del ultrasonidos
 * @param p_fsm_display_rear fsm del display
-* @param p_fsm_buzzer_rear fsm del buzzer
 * @return fsm urbanite
 */
-fsm_urbanite_t * 	fsm_urbanite_new (fsm_button_t *p_fsm_button, uint32_t on_off_press_time_ms, uint32_t pause_display_time_ms, fsm_ultrasound_t *p_fsm_ultrasound_rear, fsm_display_t *p_fsm_display_rear, fsm_buzzer_t *p_fsm_buzzer_rear);
+fsm_urbanite_t * 	fsm_urbanite_new (fsm_button_t *p_fsm_button, uint32_t on_off_press_time_ms, uint32_t pause_display_time_ms, fsm_ultrasound_t *p_fsm_ultrasound_rear, fsm_display_t *p_fsm_display_rear);
 
 
 /**

@@ -16,8 +16,7 @@
 #include "port_ultrasound.h"
 #include "stm32f4_button.h"
 #include "stm32f4_ultrasound.h"
-#include "port_buzzer.h"
-#include "stm32f4_buzzer.h"
+
 
 //------------------------------------------------------
 // INTERRUPT SERVICE ROUTINES
@@ -74,16 +73,6 @@ void TIM3_IRQHandler(){
 void TIM5_IRQHandler(){
 	TIM5->SR &= ~TIM_SR_UIF;
 	port_ultrasound_set_trigger_ready(PORT_REAR_PARKING_SENSOR_ID,true);
-}
-
-/**
- * @brief Rutina de atencion a la interrupcion del timer 9.
- *
- * @note Se encarga de contar el número de overflows del timer.
- */
-void TIM1_BRK_TIM9_IRQHandler(){
-	TIM9->SR &= ~TIM_SR_UIF;
-	port_buzzer_counter_add(PORT_PARKING_BUZZER_ID);
 }
 
 /**
